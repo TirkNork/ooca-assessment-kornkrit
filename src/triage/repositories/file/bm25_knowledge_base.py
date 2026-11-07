@@ -14,7 +14,8 @@ _STOPWORDS = frozenset({
     "that", "the", "their", "this", "to", "was", "we", "what", "when", "with", "you", "your",
 })
 # fmt: on
-_SNIPPET_CHARS = 300
+# Articles up to this size are returned whole; longer ones are cut to their most relevant parts.
+_MAX_CONTENT_CHARS = 1500
 
 
 def tokenize(text: str) -> list[str]:
@@ -70,7 +71,7 @@ class Bm25KnowledgeBase:
             KBHit(
                 article_id=article.article_id,
                 title=article.title,
-                snippet=_best_paragraph(article.body, set(query_tokens)),
+                content=_relevant_content(article.body, set(query_tokens)),
                 score=round(score, 3),
             )
             for score, article in ranked[:top_k]
@@ -78,10 +79,20 @@ class Bm25KnowledgeBase:
         ]
 
 
-def _best_paragraph(body: str, query_tokens: set[str]) -> str:
-    """The paragraph sharing the most tokens with the query, trimmed to snippet length."""
-    paragraphs = [" ".join(p.split()) for p in body.split("\n\n") if p.strip()]
-    best = max(paragraphs, key=lambda p: len(query_tokens & set(tokenize(p))))
-    if len(best) <= _SNIPPET_CHARS:
-        return best
-    return best[:_SNIPPET_CHARS].rsplit(" ", 1)[0] + "…"
+def _relevant_content(body: str, query_tokens: set[str]) -> str:
+    """The whole body if it fits, otherwise the paragraphs that share tokens with the query, most
+    relevant first, up to the size limit (returned in their original order)."""
+    if len(body) <= _MAX_CONTENT_CHARS:
+        return body
+    paragraphs = [p.strip() for p in body.split("\n\n") if p.strip()]
+    overlap = [len(query_tokens & set(tokenize(p))) for p in paragraphs]
+    by_relevance = sorted(range(len(paragraphs)), key=lambda i: overlap[i], reverse=True)
+    candidates = [i for i in by_relevance if overlap[i] > 0] or by_relevance
+    chosen: list[int] = []
+    used = 0
+    for i in candidates:
+        if chosen and used + len(paragraphs[i]) > _MAX_CONTENT_CHARS:
+            break
+        chosen.append(i)
+        used += len(paragraphs[i])
+    return "\n\n".join(paragraphs[i] for i in sorted(chosen))

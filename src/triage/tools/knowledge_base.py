@@ -25,8 +25,8 @@ def make_search_knowledge_base(knowledge_base: KnowledgeBase) -> BaseTool:
         name="search_knowledge_base",
         description=(
             "Search the help-center knowledge base (FAQ and docs) for articles that help answer "
-            "the customer. Returns article id, title, the most relevant snippet and a relevance "
-            "score; an empty list means nothing relevant was found. Search once per distinct issue."
+            "the customer. Returns article id, title, article content and a relevance score; an "
+            "empty list means nothing relevant was found. Search once per distinct issue."
         ),
         args_schema=SearchKnowledgeBaseInput,
     )

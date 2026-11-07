@@ -42,15 +42,20 @@ def test_queries_without_matches_return_nothing(repositories: Repositories, quer
     assert repositories.knowledge_base.search(query, top_k=3) == []
 
 
-def test_snippet_is_the_most_relevant_paragraph() -> None:
-    kb = Bm25KnowledgeBase(
-        [
-            KBArticle(article_id="A", title="Billing", body="Intro text.\n\nRefunds take 5 days."),
-            KBArticle(article_id="B", title="Other", body="Unrelated content."),
-        ]
-    )
+def test_short_articles_are_returned_whole(repositories: Repositories) -> None:
+    [hit] = repositories.knowledge_base.search("dark mode system default macOS", top_k=1)
+    assert hit.article_id == "KB-020"
+    assert "4.1.3" in hit.content and "Scheduled theme switching" in hit.content
+
+
+def test_long_articles_keep_the_most_relevant_paragraphs_in_order() -> None:
+    filler = "Unrelated filler sentence. " * 40
+    body = "\n\n".join([filler, "Refunds take 5 days.", filler, "Refund requests need an ID."])
+    kb = Bm25KnowledgeBase([KBArticle(article_id="A", title="Billing", body=body)])
+
     [hit] = kb.search("refund", top_k=1)
-    assert hit.snippet == "Refunds take 5 days."
+
+    assert hit.content == "Refunds take 5 days.\n\nRefund requests need an ID."
 
 
 def test_empty_knowledge_base_is_rejected() -> None:

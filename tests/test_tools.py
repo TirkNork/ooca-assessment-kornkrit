@@ -56,7 +56,7 @@ def test_check_service_status_reveals_unpublished_outage(tools: dict[str, BaseTo
 def test_search_knowledge_base_returns_hits(tools: dict[str, BaseTool]) -> None:
     hits = _call(tools["search_knowledge_base"], query="duplicate charges", top_k=2)
     assert 1 <= len(hits) <= 2
-    assert set(hits[0]) == {"article_id", "title", "snippet", "score"}
+    assert set(hits[0]) == {"article_id", "title", "content", "score"}
 
 
 @pytest.mark.parametrize(

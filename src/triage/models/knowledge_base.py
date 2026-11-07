@@ -12,5 +12,5 @@ class KBArticle(BaseModel):
 class KBHit(BaseModel):
     article_id: str
     title: str
-    snippet: str
+    content: str
     score: float
