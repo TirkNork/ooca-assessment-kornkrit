@@ -1,6 +1,7 @@
 """End-to-end graph wiring with a scripted LLM: real tools and data, no API key needed."""
 
 import json
+import logging
 from typing import Any
 
 import pytest
@@ -229,3 +230,16 @@ def test_successful_run_has_no_fallback_reason(
 ) -> None:
     llm = ScriptedChatModel(script=[AIMessage("ok"), _triage(Action.ROUTE_SPECIALIST)])
     assert _run(llm, repositories, tickets["T-1003"]).fallback_reason is None
+
+
+def test_llm_failure_is_logged_with_traceback(
+    repositories: Repositories, tickets: dict[str, Ticket], caplog: pytest.LogCaptureFixture
+) -> None:
+    llm = ScriptedChatModel(script=[TimeoutError("OpenAI did not respond")])
+
+    with caplog.at_level(logging.ERROR, logger="triage"):
+        _run(llm, repositories, tickets["T-1001"])
+
+    [record] = caplog.records
+    assert "triage failed: ticket=T-1001" in record.getMessage()
+    assert record.exc_info is not None and record.exc_info[0] is TimeoutError

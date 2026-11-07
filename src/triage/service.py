@@ -1,4 +1,9 @@
-"""Entry point for triaging tickets. CLI, API and any future UI call this, never the graph."""
+"""Entry point for triaging tickets. CLI, API and any future UI call this, never the graph.
+
+Step-by-step traces (nodes, prompts, tool calls) are left to LangSmith: set LANGSMITH_TRACING and
+LANGSMITH_API_KEY and each run is sent with the metadata below (trace_id, ticket, model, prompt
+version). The service itself only logs each outcome, so failures are visible without LangSmith.
+"""
 
 import logging
 from time import perf_counter
@@ -10,6 +15,7 @@ from langgraph.graph.state import CompiledStateGraph
 
 from triage.config import Settings, get_settings
 from triage.graph import build_graph
+from triage.graph.state import TriageState
 from triage.llm import build_chat_model
 from triage.models import (
     Action,
@@ -56,29 +62,48 @@ class TriageService:
                 config={
                     "callbacks": [usage],
                     "run_name": "triage_ticket",
-                    "metadata": {"trace_id": trace_id, "ticket_id": ticket.ticket_id},
+                    "metadata": {
+                        "trace_id": trace_id,
+                        "ticket_id": ticket.ticket_id,
+                        "model": self._model_name,
+                        "prompt_version": PROMPT_VERSION,
+                    },
                 },
             )
         except Exception as exc:
-            # Boundary of the agent: LLM outages, exhausted retries, invalid model output, etc.
-            logger.exception("triage failed for ticket %s (trace %s)", ticket.ticket_id, trace_id)
+            # Boundary of the agent: LLM outages, exhausted retries, invalid output, etc.
+            logger.exception("triage failed: ticket=%s trace=%s", ticket.ticket_id, trace_id)
             return _fallback_output(ticket, exc, metadata(tool_calls=[]))
 
-        return TriageOutput(
-            ticket_id=ticket.ticket_id,
-            triage=state["triage"],
-            assigned_team=state.get("assigned_team"),
-            suggested_reply=state.get("suggested_reply"),
-            handoff_summary=state.get("handoff_summary"),
-            policy_overrides=state.get("policy_overrides", []),
-            metadata=metadata(tool_calls=_tool_calls(state["messages"])),
+        output = _success_output(ticket, state, metadata(tool_calls=_tool_calls(state["messages"])))
+        logger.info(
+            "triage completed: ticket=%s trace=%s action=%s urgency=%s overrides=%d latency_ms=%d",
+            ticket.ticket_id,
+            trace_id,
+            output.triage.action,
+            output.triage.urgency,
+            len(output.policy_overrides),
+            output.metadata.latency_ms,
         )
+        return output
 
 
 def build_service(settings: Settings | None = None) -> TriageService:
     settings = settings or get_settings()
     graph = build_graph(build_chat_model(settings), build_repositories(settings), settings)
     return TriageService(graph, model_name=settings.openai_model)
+
+
+def _success_output(ticket: Ticket, state: TriageState, metadata: RunMetadata) -> TriageOutput:
+    return TriageOutput(
+        ticket_id=ticket.ticket_id,
+        triage=state["triage"],
+        assigned_team=state.get("assigned_team"),
+        suggested_reply=state.get("suggested_reply"),
+        handoff_summary=state.get("handoff_summary"),
+        policy_overrides=state.get("policy_overrides", []),
+        metadata=metadata,
+    )
 
 
 def _fallback_output(ticket: Ticket, error: Exception, metadata: RunMetadata) -> TriageOutput:

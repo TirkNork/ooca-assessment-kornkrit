@@ -29,7 +29,6 @@ class Settings(BaseSettings):
     max_tool_iterations: int = Field(default=6, ge=1)
 
     log_level: Literal["DEBUG", "INFO", "WARNING", "ERROR"] = "INFO"
-    log_format: Literal["console", "json"] = "console"
 
 
 @lru_cache
