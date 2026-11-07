@@ -6,24 +6,24 @@ from triage.models import KBArticle
 from triage.repositories import Repositories
 from triage.repositories.file import Bm25KnowledgeBase
 
+# Queries the agent is expected to make for the sample tickets; shared with the Postgres tests.
+RETRIEVAL_CASES = [
+    # Ticket 1: failed upgrade, duplicate charges, needs Pro export
+    ("duplicate pending charges after failed upgrade", "KB-012"),
+    ("refund duplicate charges", "KB-013"),
+    ("Pro export features for presentation", "KB-040"),
+    # Ticket 2: whole team gets HTTP 500, status page says operational
+    ("HTTP 500 error cannot access multiple users", "KB-031"),
+    ("status page says all systems operational but asia region is down", "KB-032"),
+    ("enterprise SLA critical issue response time", "KB-050"),
+    # Ticket 3: dark mode missing / System Default not following macOS, scheduling
+    ("dark mode option missing, only light and system default", "KB-020"),
+    ("system default theme not following macOS dark appearance", "KB-020"),
+    ("schedule dark mode to switch automatically at a set time", "KB-020"),
+]
 
-@pytest.mark.parametrize(
-    ("query", "expected_article"),
-    [
-        # Ticket 1: failed upgrade, duplicate charges, needs Pro export
-        ("duplicate pending charges after failed upgrade", "KB-012"),
-        ("refund duplicate charges", "KB-013"),
-        ("Pro export features for presentation", "KB-040"),
-        # Ticket 2: whole team gets HTTP 500, status page says operational
-        ("HTTP 500 error cannot access multiple users", "KB-031"),
-        ("status page says all systems operational but asia region is down", "KB-032"),
-        ("enterprise SLA critical issue response time", "KB-050"),
-        # Ticket 3: dark mode missing / System Default not following macOS, scheduling
-        ("dark mode option missing, only light and system default", "KB-020"),
-        ("system default theme not following macOS dark appearance", "KB-020"),
-        ("schedule dark mode to switch automatically at a set time", "KB-020"),
-    ],
-)
+
+@pytest.mark.parametrize(("query", "expected_article"), RETRIEVAL_CASES)
 def test_expected_article_is_in_top_3(
     repositories: Repositories, query: str, expected_article: str
 ) -> None:

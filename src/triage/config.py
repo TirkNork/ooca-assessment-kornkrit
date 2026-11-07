@@ -28,6 +28,13 @@ class Settings(BaseSettings):
 
     # Set to /app/data in the Docker image; the relative default resolves from the working dir.
     data_dir: Path = Path("data")
+
+    # Where tools read from: JSON files + BM25, or Postgres + pgvector (seed it first).
+    repository_backend: Literal["file", "postgres"] = "file"
+    database_url: str | None = None
+    openai_embedding_model: str = "text-embedding-3-small"
+    # Below this cosine similarity a chunk does not count as a semantic match.
+    kb_min_similarity: float = Field(default=0.3, ge=0, le=1)
     max_tool_iterations: int = Field(default=6, ge=1)
 
     log_level: Literal["DEBUG", "INFO", "WARNING", "ERROR"] = "INFO"

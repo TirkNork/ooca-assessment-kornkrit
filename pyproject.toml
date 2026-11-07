@@ -9,8 +9,11 @@ dependencies = [
     "langchain-core>=1.7.6",
     "langchain-openai>=1.7.4",
     "langgraph>=1.2.20",
+    "pgvector>=0.5.1",
+    "psycopg[binary]>=3.3.8",
     "pydantic>=2.14.3",
     "pydantic-settings>=2.16.2",
+    "sqlalchemy>=2.1.8",
     "uvicorn>=0.54.0",
 ]
 
@@ -31,6 +34,7 @@ select = ["E", "F", "I", "UP", "B", "SIM", "RUF"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-q"
+markers = ["integration: needs the Postgres database (skipped when it is unreachable)"]
 
 [dependency-groups]
 dev = [

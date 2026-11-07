@@ -1,5 +1,8 @@
 """Test doubles."""
 
+import hashlib
+import math
+from collections import Counter
 from typing import Any
 
 from langchain_core.language_models import BaseChatModel
@@ -7,6 +10,9 @@ from langchain_core.messages import AIMessage, BaseMessage
 from langchain_core.outputs import ChatGeneration, ChatResult
 from langchain_core.runnables import Runnable, RunnableLambda
 from pydantic import Field
+
+from triage.embeddings import EMBEDDING_DIMENSIONS
+from triage.repositories.file.bm25_knowledge_base import tokenize
 
 
 class ScriptedChatModel(BaseChatModel):
@@ -49,3 +55,27 @@ class ScriptedChatModel(BaseChatModel):
             {"messages": messages, "kind": expected.__name__, "tools_bound": self.tools_bound}
         )
         return response
+
+
+class HashingEmbedder:
+    """Deterministic bag-of-words embedding: texts sharing words get similar vectors, so vector
+    search behaves sensibly in tests without calling an embedding API."""
+
+    def __init__(self) -> None:
+        self.embedded_texts = 0
+
+    def embed_documents(self, texts: list[str]) -> list[list[float]]:
+        self.embedded_texts += len(texts)
+        return [self._embed(t) for t in texts]
+
+    def embed_query(self, text: str) -> list[float]:
+        return self._embed(text)
+
+    @staticmethod
+    def _embed(text: str) -> list[float]:
+        vector = [0.0] * EMBEDDING_DIMENSIONS
+        for token, count in Counter(tokenize(text)).items():
+            index = int(hashlib.md5(token.encode()).hexdigest(), 16) % EMBEDDING_DIMENSIONS
+            vector[index] += count
+        norm = math.sqrt(sum(v * v for v in vector)) or 1.0
+        return [v / norm for v in vector]
