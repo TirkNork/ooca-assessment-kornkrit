@@ -20,6 +20,26 @@ cp .env.example .env        # then set OPENAI_API_KEY
 docker compose build
 ```
 
+## Usage
+
+Triage the sample tickets from the command line:
+
+```bash
+docker compose run --rm app python scripts/triage_tickets.py data/sample_tickets.json
+docker compose run --rm app python scripts/triage_tickets.py data/sample_tickets.json --ticket T-1001
+docker compose run --rm app python scripts/triage_tickets.py data/sample_tickets.json --json
+```
+
+Or run the HTTP API and post a ticket (interactive docs at http://localhost:8000/docs):
+
+```bash
+docker compose up api
+curl -X POST localhost:8000/triage -H 'content-type: application/json' -d '{
+  "ticket_id": "T-1", "customer_id": "C-3001",
+  "messages": [{"sent_at": "2026-11-07T09:00:00Z", "content": "Is there a dark mode?"}]
+}'
+```
+
 ## Development
 
 ```bash

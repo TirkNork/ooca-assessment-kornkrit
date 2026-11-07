@@ -1,5 +1,7 @@
 """Application settings, loaded from environment variables (and `.env` if present)."""
 
+import logging
+import sys
 from functools import lru_cache
 from pathlib import Path
 from typing import Literal
@@ -34,3 +36,9 @@ class Settings(BaseSettings):
 @lru_cache
 def get_settings() -> Settings:
     return Settings()
+
+
+def configure_logging(level: str) -> None:
+    """For entry points: the app's own loggers use `level`, third-party libraries only warn."""
+    logging.basicConfig(level=logging.WARNING, stream=sys.stderr)
+    logging.getLogger("triage").setLevel(level)

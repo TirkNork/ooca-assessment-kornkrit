@@ -22,6 +22,7 @@ RUN --mount=type=cache,target=/root/.cache/uv \
 COPY README.md ./
 COPY src ./src
 COPY data ./data
+COPY scripts ./scripts
 
 # ---- dev: adds test/lint tooling; used by docker compose ---------------------------------
 FROM base AS dev
@@ -34,4 +35,5 @@ CMD ["pytest"]
 FROM base AS runtime
 RUN --mount=type=cache,target=/root/.cache/uv \
     uv sync --frozen --no-dev
-CMD ["python", "-c", "import triage; print('triage installed')"]
+EXPOSE 8000
+CMD ["uvicorn", "triage.api:app", "--host", "0.0.0.0", "--port", "8000"]
