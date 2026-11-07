@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+
+# Virtual env / uv
+.venv/
+
+# Tooling caches
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Eval / run outputs
+evals/results/
+*.log
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+
+# Assignment brief (not part of the deliverable)
+*.docx
+
+# Local working notes 
+local/
