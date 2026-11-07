@@ -40,10 +40,24 @@ curl -X POST localhost:8000/triage -H 'content-type: application/json' -d '{
 }'
 ```
 
+### Postgres + pgvector backend
+
+By default the tools read the JSON files in `data/` and search the knowledge base with BM25.
+To use Postgres instead (hybrid search: pgvector similarity + full-text, fused with RRF):
+
+```bash
+docker compose run --rm app python scripts/seed_db.py          # load data/ and embed the KB
+echo "REPOSITORY_BACKEND=postgres" >> .env
+docker compose run --rm app python scripts/triage_tickets.py data/sample_tickets.json
+```
+
+Re-running the seed replaces the data and only embeds chunks whose text changed
+(`--reset` drops and recreates the tables).
+
 ## Development
 
 ```bash
-docker compose run --rm app pytest
+docker compose run --rm app pytest            # starts Postgres for the integration tests
 docker compose run --rm app ruff check .
 docker compose run --rm app ruff format .
 ```
