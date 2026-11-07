@@ -1,15 +1,17 @@
 """Graph nodes. Each takes the current state and returns only the keys it changes."""
 
+import json
 from typing import Literal
 
 from langchain_core.language_models import BaseChatModel
-from langchain_core.messages import AIMessage, AnyMessage, HumanMessage, SystemMessage
+from langchain_core.messages import AIMessage, AnyMessage, HumanMessage, SystemMessage, ToolMessage
 from langchain_core.tools import BaseTool
 from pydantic import BaseModel, Field
 
 from triage.graph.context import render_ticket_context
 from triage.graph.state import TriageState
 from triage.models import TriageResult
+from triage.policy import PolicyContext, PolicyEngine
 from triage.prompts import load_prompt
 from triage.repositories import CustomerRepository
 from triage.routing import assign_team
@@ -26,6 +28,7 @@ class TriageNodes:
         llm: BaseChatModel,
         tools: list[BaseTool],
         customers: CustomerRepository,
+        policy: PolicyEngine,
         max_tool_rounds: int,
     ) -> None:
         self._llm = llm
@@ -33,6 +36,7 @@ class TriageNodes:
         self._classifier = llm.with_structured_output(TriageResult)
         self._escalation_writer = llm.with_structured_output(EscalationDraft)
         self._customers = customers
+        self._policy = policy
         self._max_tool_rounds = max_tool_rounds
 
     def load_context(self, state: TriageState) -> TriageState:
@@ -54,8 +58,17 @@ class TriageNodes:
 
     def classify(self, state: TriageState) -> TriageState:
         prompt = HumanMessage(load_prompt("classify"))
-        triage = self._classifier.invoke([*state["messages"], prompt])
-        return {"triage": triage}
+        return {"llm_triage": self._classifier.invoke([*state["messages"], prompt])}
+
+    def apply_policy(self, state: TriageState) -> TriageState:
+        result = self._policy.apply(
+            PolicyContext(
+                triage=state["llm_triage"],
+                customer=state.get("customer"),
+                retrieved_kb_ids=_retrieved_kb_ids(state["messages"]),
+            )
+        )
+        return {"triage": result.triage, "policy_overrides": result.overrides}
 
     def auto_respond(self, state: TriageState) -> TriageState:
         prompt = load_prompt("auto_respond").format(language=state["triage"].language)
@@ -89,6 +102,21 @@ def route_after_agent(state: TriageState) -> Literal["tools", "classify"]:
 def route_by_action(state: TriageState) -> str:
     """Action nodes are named after the action they perform."""
     return state["triage"].action.value
+
+
+def _retrieved_kb_ids(messages: list[AnyMessage]) -> frozenset[str]:
+    ids: set[str] = set()
+    for m in messages:
+        if isinstance(m, ToolMessage) and m.name == "search_knowledge_base":
+            try:
+                hits = json.loads(m.text)
+            except json.JSONDecodeError:
+                continue
+            if isinstance(hits, list):
+                ids.update(
+                    h["article_id"] for h in hits if isinstance(h, dict) and "article_id" in h
+                )
+    return frozenset(ids)
 
 
 def _tool_rounds(messages: list[AnyMessage]) -> int:

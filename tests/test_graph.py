@@ -167,3 +167,65 @@ def test_tool_budget_forces_the_agent_to_conclude(
     _run(llm, repositories, tickets["T-1003"], settings)
 
     assert [c["tools_bound"] for c in llm.calls[:2]] == [True, False]
+
+
+def test_policy_overrides_the_llm_and_is_reported(
+    repositories: Repositories, tickets: dict[str, Ticket]
+) -> None:
+    # The model proposes an automatic reply citing an article it never retrieved.
+    llm = ScriptedChatModel(
+        script=[
+            AIMessage("No lookups needed."),
+            _triage(Action.AUTO_RESPOND, kb_article_ids=["KB-999"]),
+        ]
+    )
+
+    output = _run(llm, repositories, tickets["T-1003"])
+
+    assert output.triage.action is Action.ROUTE_SPECIALIST
+    assert output.assigned_team is Team.TECHNICAL_SUPPORT
+    assert output.suggested_reply is None
+    assert output.policy_overrides[0].startswith("auto_respond_needs_grounding:")
+
+
+def test_enterprise_outage_is_escalated_even_if_the_llm_routes_it(
+    repositories: Repositories, tickets: dict[str, Ticket]
+) -> None:
+    llm = ScriptedChatModel(
+        script=[
+            AIMessage("Looks like an outage."),
+            _triage(Action.ROUTE_SPECIALIST, urgency=Urgency.HIGH, issue_types=[IssueType.OUTAGE]),
+            EscalationDraft(handoff_summary="- outage", customer_reply="กำลังตรวจสอบ"),
+        ]
+    )
+
+    output = _run(llm, repositories, tickets["T-1002"])  # C-2001 is Enterprise
+
+    assert (output.triage.action, output.triage.urgency) == (
+        Action.ESCALATE_HUMAN,
+        Urgency.CRITICAL,
+    )
+    assert output.assigned_team is Team.ENGINEERING_ONCALL
+    assert output.policy_overrides[0].startswith("enterprise_outage:")
+
+
+def test_llm_failure_falls_back_to_a_human_instead_of_raising(
+    repositories: Repositories, tickets: dict[str, Ticket]
+) -> None:
+    llm = ScriptedChatModel(script=[TimeoutError("OpenAI did not respond")])
+
+    output = _run(llm, repositories, tickets["T-1001"])
+
+    assert output.fallback_reason is not None and "TimeoutError" in output.fallback_reason
+    assert output.triage.action is Action.ESCALATE_HUMAN
+    assert output.triage.urgency is Urgency.HIGH
+    assert output.assigned_team is Team.TECHNICAL_SUPPORT
+    assert "T-1001" in (output.handoff_summary or "")
+    assert output.metadata.trace_id
+
+
+def test_successful_run_has_no_fallback_reason(
+    repositories: Repositories, tickets: dict[str, Ticket]
+) -> None:
+    llm = ScriptedChatModel(script=[AIMessage("ok"), _triage(Action.ROUTE_SPECIALIST)])
+    assert _run(llm, repositories, tickets["T-1003"]).fallback_reason is None

@@ -10,7 +10,9 @@ class TriageState(TypedDict, total=False):
     ticket: Ticket
     customer: CustomerProfile | None
     messages: Annotated[list[AnyMessage], add_messages]
-    triage: TriageResult
+    llm_triage: TriageResult  # as classified by the model
+    triage: TriageResult  # after policy rules
+    policy_overrides: list[str]
     assigned_team: Team | None
     suggested_reply: str | None
     handoff_summary: str | None

@@ -13,8 +13,9 @@ class ScriptedChatModel(BaseChatModel):
     """Chat model that returns pre-scripted responses in order.
 
     Plain calls must be scripted with an `AIMessage`; structured-output calls with an instance of
-    the requested schema. Every call is recorded so tests can assert on what the graph sent.
-    Copies made by `bind_tools` share the same script and call log.
+    the requested schema. A scripted exception is raised, to simulate API failures. Every call
+    is recorded so tests can assert on what the graph sent. Copies made by `bind_tools` share
+    the same script and call log.
     """
 
     # Typed as Any so pydantic stores the scripted objects as-is instead of coercing them.
@@ -40,6 +41,8 @@ class ScriptedChatModel(BaseChatModel):
         if not self.script:
             raise AssertionError(f"unexpected extra LLM call (wanted {expected.__name__})")
         response = self.script.pop(0)
+        if isinstance(response, Exception):
+            raise response
         if not isinstance(response, expected):
             raise AssertionError(f"scripted {type(response).__name__}, graph wanted {expected}")
         self.calls.append(

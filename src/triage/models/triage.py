@@ -21,7 +21,6 @@ class TriageResult(BaseModel):
     summary: str = Field(description="One-sentence summary of the customer's problem(s).")
     urgency: Urgency = Field(description="How quickly a human must act on this ticket.")
     products: list[Product] = Field(
-        min_length=1,
         description=(
             "Products affected by the ticket. Infer from the messages and the products the "
             "customer subscribes to; list several if the issue spans products."
@@ -68,5 +67,11 @@ class TriageOutput(BaseModel):
     handoff_summary: str | None = Field(
         default=None, description="Context for the human or specialist who picks this up."
     )
-    policy_overrides: list[str] = Field(default_factory=list)
+    policy_overrides: list[str] = Field(
+        default_factory=list, description="Changes the policy rules made to the LLM's triage."
+    )
+    fallback_reason: str | None = Field(
+        default=None,
+        description="Set when automatic triage failed and the ticket was sent to a human.",
+    )
     metadata: RunMetadata
