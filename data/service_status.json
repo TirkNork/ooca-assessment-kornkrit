@@ -1,0 +1,32 @@
+[
+  {
+    "region": "us",
+    "status": "degraded",
+    "public_status": "operational",
+    "active_incidents": [
+      {
+        "incident_id": "INC-2287",
+        "started_at": "2026-11-07T05:40:00Z",
+        "title": "Billing: subscription activation delayed after successful card authorization"
+      }
+    ]
+  },
+  {
+    "region": "eu",
+    "status": "operational",
+    "public_status": "operational",
+    "active_incidents": []
+  },
+  {
+    "region": "asia",
+    "status": "outage",
+    "public_status": "operational",
+    "active_incidents": [
+      {
+        "incident_id": "INC-2291",
+        "started_at": "2026-11-07T06:52:00Z",
+        "title": "Elevated HTTP 500 error rate on the shared asia API gateway (all products unavailable)"
+      }
+    ]
+  }
+]

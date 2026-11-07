@@ -1,0 +1,58 @@
+[
+  {
+    "customer_id": "C-1001",
+    "subscription_status": "upgrade_pending",
+    "transactions": [
+      {
+        "transaction_id": "TX-90311",
+        "created_at": "2026-11-07T05:58:00Z",
+        "amount": "29.99",
+        "currency": "USD",
+        "status": "pending",
+        "failure_reason": "Pro upgrade: subscription activation failed after card authorization"
+      },
+      {
+        "transaction_id": "TX-90342",
+        "created_at": "2026-11-07T06:55:00Z",
+        "amount": "29.99",
+        "currency": "USD",
+        "status": "pending",
+        "failure_reason": "Pro upgrade: subscription activation failed after card authorization"
+      },
+      {
+        "transaction_id": "TX-90378",
+        "created_at": "2026-11-07T07:41:00Z",
+        "amount": "29.99",
+        "currency": "USD",
+        "status": "pending",
+        "failure_reason": "Pro upgrade: subscription activation failed after card authorization"
+      }
+    ]
+  },
+  {
+    "customer_id": "C-2001",
+    "subscription_status": "active",
+    "transactions": [
+      {
+        "transaction_id": "TX-88120",
+        "created_at": "2026-11-01T00:00:00Z",
+        "amount": "2205.00",
+        "currency": "USD",
+        "status": "succeeded"
+      }
+    ]
+  },
+  {
+    "customer_id": "C-3001",
+    "subscription_status": "active",
+    "transactions": [
+      {
+        "transaction_id": "TX-87455",
+        "created_at": "2026-11-01T00:00:00Z",
+        "amount": "29.99",
+        "currency": "USD",
+        "status": "succeeded"
+      }
+    ]
+  }
+]

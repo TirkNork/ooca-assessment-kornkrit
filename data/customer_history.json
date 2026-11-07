@@ -1,0 +1,32 @@
+[
+  {
+    "customer_id": "C-1001",
+    "activity_summary": "4 months on the Analytics free tier with weekly usage. Attempted to upgrade to Pro today. First time contacting support.",
+    "past_tickets": []
+  },
+  {
+    "customer_id": "C-2001",
+    "activity_summary": "Siam Retail Co., Ltd. uses CRM for its sales team and ERP for inventory and orders. 45 seats with high daily usage. No previous critical incidents.",
+    "past_tickets": [
+      {
+        "opened_at": "2026-05-14T03:20:00Z",
+        "product": "crm",
+        "summary": "CRM: how to bulk-invite sales reps via CSV.",
+        "urgency": "low",
+        "resolved": true
+      },
+      {
+        "opened_at": "2026-08-21T07:45:00Z",
+        "product": "erp",
+        "summary": "ERP: SSO login loop for two users after IdP certificate rotation.",
+        "urgency": "medium",
+        "resolved": true
+      }
+    ]
+  },
+  {
+    "customer_id": "C-3001",
+    "activity_summary": "Active CRM user with daily logins for 5 months, uses the CRM desktop app on macOS. No previous support tickets.",
+    "past_tickets": []
+  }
+]

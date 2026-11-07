@@ -1,0 +1,48 @@
+[
+  {
+    "customer_id": "C-1001",
+    "name": "Jordan Lee",
+    "plan": "free",
+    "region": "us",
+    "seats": 1,
+    "customer_since": "2026-07-05",
+    "products": [
+      {
+        "product": "analytics",
+        "since": "2026-07-05"
+      }
+    ]
+  },
+  {
+    "customer_id": "C-2001",
+    "name": "Somchai Wongsakul",
+    "plan": "enterprise",
+    "region": "asia",
+    "seats": 45,
+    "customer_since": "2026-03-02",
+    "products": [
+      {
+        "product": "crm",
+        "since": "2026-03-02"
+      },
+      {
+        "product": "erp",
+        "since": "2026-04-15"
+      }
+    ]
+  },
+  {
+    "customer_id": "C-3001",
+    "name": "Priya Nair",
+    "plan": "pro",
+    "region": "eu",
+    "seats": 1,
+    "customer_since": "2026-06-01",
+    "products": [
+      {
+        "product": "crm",
+        "since": "2026-06-01"
+      }
+    ]
+  }
+]
