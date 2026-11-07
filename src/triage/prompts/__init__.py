@@ -7,7 +7,7 @@ produced them; bump it whenever a prompt changes.
 from functools import cache
 from importlib.resources import files
 
-PROMPT_VERSION = "2"
+PROMPT_VERSION = "3"
 
 
 @cache
