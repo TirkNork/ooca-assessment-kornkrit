@@ -95,7 +95,9 @@ def main(argv: list[str] | None = None, service: TriageService | None = None) ->
     if args.save:
         RESULTS_DIR.mkdir(parents=True, exist_ok=True)
         stamp = started_at.strftime("%Y%m%dT%H%M%SZ")
-        base = RESULTS_DIR / f"{stamp}_{settings.openai_model}_prompt-v{PROMPT_VERSION}"
+        base = RESULTS_DIR / (
+            f"{stamp}_{settings.openai_model}_prompt-v{PROMPT_VERSION}_{settings.repository_backend}"
+        )
         for suffix, render in ((".json", to_json), (".md", to_markdown), (".html", to_html)):
             base.with_suffix(suffix).write_text(render(run), encoding="utf-8")
         print(f"Report saved to {base}.{{json,md,html}}", file=sys.stderr)
