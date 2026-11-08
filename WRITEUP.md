@@ -44,10 +44,13 @@
 
 1. **Regression gate:** the 30-ticket eval on every prompt or model change; fails on a missed
    escalation or unsafe auto-reply.
-2. **Shadow mode:** agent and support team triage the same tickets; audit every case where the
+2. **Reply quality:** an LLM judge (a different model) scores drafts for faithfulness to the
+   cited KB, no promises or internal IDs, the customer's language, and complete handoffs;
+   calibrated against human ratings on a sample first.
+3. **Shadow mode:** agent and support team triage the same tickets; audit every case where the
    agent was less urgent.
-3. **Gradual rollout:** drafts reviewed by agents; auto-send per issue type once reopen rate and
+4. **Gradual rollout:** drafts reviewed by agents; auto-send per issue type once reopen rate and
    CSAT match human replies.
-4. **Monitoring:** human override rate, policy override and fallback rates, reopen rate, p95
+5. **Monitoring:** human override rate, policy override and fallback rates, reopen rate, p95
    latency, cost per ticket, daily urgency/action mix with alerts.
-5. **Feedback loop:** every human correction becomes an eval case.
+6. **Feedback loop:** every human correction becomes an eval case.
