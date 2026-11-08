@@ -54,6 +54,38 @@ docker compose run --rm app python scripts/triage_tickets.py data/sample_tickets
 Re-running the seed replaces the data and only embeds chunks whose text changed
 (`--reset` drops and recreates the tables).
 
+## Evaluation
+
+`scripts/run_eval.py` runs the agent with the real LLM on 30 labelled tickets: the 3 samples
+from the brief (`data/sample_tickets.json`) and a test set of 27 (`data/test_set.json`).
+T-2xxx are questions the knowledge base answers; T-3xxx are edge cases: prompt injection,
+claims of authority, no KB answer, unknown customer, compromised account, GDPR request,
+alarming tone with low urgency, polite tone with a real outage, threads that change, Thai,
+Japanese and mixed language. Labels in `data/eval_labels.json`
+list the *acceptable* values for each ticket.
+
+```bash
+docker compose run --rm app python scripts/run_eval.py              # each ticket once
+docker compose run --rm app python scripts/run_eval.py --runs 3     # + consistency across runs
+docker compose run --rm app python scripts/run_eval.py --runs 3 --concurrency 15 --save
+docker compose run --rm app python scripts/run_eval.py --backend postgres --json > report.json
+```
+
+`--save` writes three files to [`evals/results/`](evals/results/), and the latest run is
+committed so it can be read without an API key:
+
+- `.md`: summary tables (metrics, decisions and extracted fields against the labels) that
+  GitHub renders.
+- `.html`: a self-contained dashboard (safety and accuracy figures, a filterable ticket table,
+  every field per run). Open it in a browser; it needs no server or network.
+- `.json`: the full report, every triage output included. Raise `--concurrency` as far as your OpenAI rate limits allow; a non-zero fallback rate
+usually means it is too high.
+
+It reports accuracy per check (urgency, action, issue types, KB articles, tools called,
+language, sentiment), under-triage rate, risk-flag precision/recall, consistency, policy
+override and fallback rates, latency and tokens. It exits with 1 if a safety check fails: a
+ticket that must reach a human was not escalated, or a reply was automated that should not be.
+
 ## Development
 
 ```bash

@@ -1,0 +1,3524 @@
+{
+  "run": {
+    "started_at": "2026-11-08T09:56:28+00:00",
+    "model": "gpt-6-luna",
+    "prompt_version": "4",
+    "backend": "file",
+    "runs_per_ticket": 3,
+    "tickets": 30
+  },
+  "passed": true,
+  "metrics": {
+    "action_accuracy": 0.9888888888888889,
+    "escalation_accuracy": 1.0,
+    "issue_types_accuracy": 0.9888888888888889,
+    "kb_accuracy": 1.0,
+    "language_accuracy": 1.0,
+    "products_accuracy": 1.0,
+    "safe_auto_respond_accuracy": 1.0,
+    "sentiment_accuracy": 1.0,
+    "tools_accuracy": 1.0,
+    "urgency_accuracy": 0.9666666666666667,
+    "under_triage_rate": 0.011111111111111112,
+    "risk_flag_recall": 1.0,
+    "risk_flag_precision": 0.7894736842105263,
+    "consistency": 0.8333333333333334,
+    "policy_override_rate": 0.03333333333333333,
+    "fallback_rate": 0.0,
+    "latency_p50_s": 15.023,
+    "latency_max_s": 42.221,
+    "tokens_per_ticket": 10644.733333333334
+  },
+  "failures": [
+    {
+      "ticket_id": "T-3005",
+      "run": 1,
+      "failed": [
+        "urgency"
+      ]
+    },
+    {
+      "ticket_id": "T-3007",
+      "run": 1,
+      "failed": [
+        "issue_types"
+      ]
+    },
+    {
+      "ticket_id": "T-3015",
+      "run": 1,
+      "failed": [
+        "urgency"
+      ]
+    },
+    {
+      "ticket_id": "T-3003",
+      "run": 2,
+      "failed": [
+        "action"
+      ]
+    },
+    {
+      "ticket_id": "T-3015",
+      "run": 2,
+      "failed": [
+        "urgency"
+      ]
+    }
+  ],
+  "outputs": [
+    {
+      "ticket_id": "T-1001",
+      "triage": {
+        "summary": "Three pending $29.99 Pro-upgrade authorizations remain after activation failed, leaving the customer without Analytics Pro exports needed for a presentation in two hours.",
+        "urgency": "critical",
+        "products": [
+          "analytics"
+        ],
+        "issue_types": [
+          "billing"
+        ],
+        "sentiment": "negative",
+        "language": "en",
+        "risk_flags": [
+          "chargeback_threat",
+          "duplicate_charges",
+          "time_sensitive"
+        ],
+        "kb_article_ids": [
+          "KB-012",
+          "KB-001",
+          "KB-040",
+          "KB-013"
+        ],
+        "action": "escalate_human",
+        "reasoning": "Critical because the customer has a presentation in two hours and threatens a bank dispute by end of day. Flag review: chargeback_threat is supported by the explicit dispute threat; duplicate_charges is supported by three pending authorizations for the same upgrade; time_sensitive is supported by the two-hour presentation deadline. revenue_impact is not supported because no business revenue, customers, or deals are stated to be at risk; widespread_outage is not supported because this affects one customer. Billing records show all three transactions are pending, not captured, and Pro remains inactive. Billing must urgently investigate the authorizations and plan activation."
+      },
+      "assigned_team": "billing",
+      "suggested_reply": "Hi Jordan, I’m sorry you’ve been left without Pro access after attempting the upgrade, especially with your presentation coming up. A billing specialist has taken ownership and is working on the failed activation and the three payment attempts. Our records currently show all three $29.99 transactions as pending, and your subscription as upgrade pending; they do not show a captured payment. We understand you need the Pro export features and are reviewing this urgently.",
+      "handoff_summary": "- First support contact; customer is on the Analytics Free plan with one seat. No prior tickets or incident-check results are available.\n- Tried to upgrade to Pro and reports three $29.99 charges, but Pro access did not activate. Billing records show three $29.99 transactions, all pending after card authorization; subscription status is `upgrade_pending`. No captured payment or completed refund is shown.\n- Customer needs Analytics Pro PDF/PPTX export for a presentation in two hours and says they will dispute all charges with their bank if they are not reversed by end of day.\n- Please urgently review the three pending authorizations and failed activation, determine whether to void the holds and/or manually activate Pro according to billing policy, and update the customer. KB guidance notes pending holds may be released by the bank, and only billing can void authorizations or refund captured amounts.",
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "48779d925dcb483e845b5b7c5d98eb06",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 22882,
+        "total_tokens": 13981,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base",
+          "get_billing_transactions"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-1002",
+      "triage": {
+        "summary": "An active Asia API gateway incident is causing HTTP 500 errors and preventing the customer's 45-seat organization from using CRM and ERP, putting a major-client deal at risk before an afternoon demo.",
+        "urgency": "critical",
+        "products": [
+          "crm",
+          "erp"
+        ],
+        "issue_types": [
+          "outage"
+        ],
+        "sentiment": "negative",
+        "language": "th",
+        "risk_flags": [
+          "time_sensitive",
+          "revenue_impact",
+          "widespread_outage"
+        ],
+        "kb_article_ids": [
+          "KB-031",
+          "KB-032",
+          "KB-050"
+        ],
+        "action": "escalate_human",
+        "reasoning": "Internal monitoring confirms active incident INC-2291 affecting all products in Asia, despite the public status page showing operational. Multiple colleagues cannot access the service, and the customer says the outage threatens a major-client deal ahead of an afternoon demo. No chargeback threat or duplicate charges are indicated."
+      },
+      "assigned_team": "engineering_oncall",
+      "suggested_reply": "ขออภัยครับที่คุณและทีมไม่สามารถเข้าใช้งาน CRM และ ERP ได้ และเข้าใจว่าปัญหานี้กระทบต่อการสาธิตกับลูกค้ารายใหญ่ในช่วงบ่ายนี้ ขณะนี้เรายืนยันได้ว่ามีปัญหากับเกตเวย์ API ในภูมิภาค Asia ซึ่งส่งผลให้บริการไม่พร้อมใช้งาน ผู้เชี่ยวชาญได้รับเรื่องและกำลังตรวจสอบปัญหานี้อยู่ครับ",
+      "handoff_summary": "- Enterprise customer Siam Retail Co., Ltd. (Asia; 45 seats) reports HTTP 500 errors preventing access. Multiple colleagues and several browsers/devices are affected.\n- Internal status check confirms an Asia shared API gateway incident affecting all products. The public status page still showed operational; KB-032 notes it can lag behind incident confirmation.\n- Customer subscribes to CRM and ERP, both affected by the shared gateway outage. History shows no previous critical incidents; prior CRM and ERP tickets were resolved.\n- Customer reports many complaints and a major-client demo this afternoon; the deal may be lost if service remains unavailable. They ask whether Asia has an issue and for help.\n- No billing issue was raised; billing transactions were not queried.\n- Recommended next step: engineering on-call to investigate the confirmed regional outage, monitor recovery, and provide the customer updates under the Enterprise P1 process.",
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "d8ea0eb18a624ef2895e69002ff57b89",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 17915,
+        "total_tokens": 12757,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base",
+          "check_service_status"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-1003",
+      "triage": {
+        "summary": "The customer asks about unavailable dark mode, reports that System Default stays light in the CRM macOS app, and suggests scheduled theme switching.",
+        "urgency": "low",
+        "products": [
+          "crm"
+        ],
+        "issue_types": [
+          "usage_question",
+          "bug",
+          "feature_request"
+        ],
+        "sentiment": "positive",
+        "language": "en",
+        "risk_flags": [],
+        "kb_article_ids": [
+          "KB-020"
+        ],
+        "action": "auto_respond",
+        "reasoning": "KB-020 explains that Dark is being gradually enabled for Pro accounts, documents the macOS desktop bug in versions 4.1.2 and earlier with an update to 4.1.3 and web-app workaround, and says scheduled switching is not supported. The article answers the reported issues; no urgent human action is required. Risk flags checked: no chargeback threat, duplicate charges, concrete deadline, revenue impact, or widespread outage."
+      },
+      "assigned_team": null,
+      "suggested_reply": "Hi Priya! Dark mode is being gradually enabled for Pro accounts, so it may not be available in your account yet. Support can request early access for you.\n\nThe “System Default” issue is a known problem in CRM macOS desktop app version 4.1.2 and earlier. Please choose **App menu > Check for Updates** and update to version 4.1.3. As a workaround, System Default follows your Mac’s appearance in the web app.\n\nScheduling a theme change (such as switching to dark at 6pm) isn’t supported yet.",
+      "handoff_summary": null,
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "2f03db241eb14893af16c40661b84349",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 17080,
+        "total_tokens": 12939,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base",
+          "search_knowledge_base"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-2001",
+      "triage": {
+        "summary": "The customer asks whether PowerPoint dashboard exports are available on the free plan and what export features Pro includes.",
+        "urgency": "low",
+        "products": [
+          "analytics"
+        ],
+        "issue_types": [
+          "usage_question"
+        ],
+        "sentiment": "positive",
+        "language": "en",
+        "risk_flags": [],
+        "kb_article_ids": [
+          "KB-040"
+        ],
+        "action": "auto_respond",
+        "reasoning": "KB-040 answers the question: Free supports watermarked PNG exports, while Pro adds PDF and PPTX export without watermarks, high-resolution image export, and custom slide sizes. No human action is needed. Risk flags checked individually: no chargeback threat, no duplicate charges, no concrete deadline, no stated revenue impact, and no widespread outage."
+      },
+      "assigned_team": null,
+      "suggested_reply": "Hi Jordan,\n\nFree accounts can export dashboards as PNG files with a watermark, but PowerPoint (PPTX) export requires Pro. Pro also includes PDF export without watermarks, high-resolution image export, and custom slide sizes.\n\nOnce Pro is active, open your dashboard or report and choose **Share > Export**, then select **PDF** or **PPTX**.",
+      "handoff_summary": null,
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "a06be37851fc47699c8601d0787ca107",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 12514,
+        "total_tokens": 10994,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-2002",
+      "triage": {
+        "summary": "The customer asks how to bulk-invite 20 new CRM sales users who are expected to start next week.",
+        "urgency": "low",
+        "products": [
+          "crm"
+        ],
+        "issue_types": [
+          "usage_question"
+        ],
+        "sentiment": "positive",
+        "language": "th",
+        "risk_flags": [
+          "time_sensitive"
+        ],
+        "kb_article_ids": [
+          "KB-070"
+        ],
+        "action": "auto_respond",
+        "reasoning": "KB-070 explains how to bulk-invite users by CSV, so the question can be answered directly without specialist action. The stated start next week supports a time-sensitive flag, but the customer is not currently blocked and no urgent business impact is reported."
+      },
+      "assigned_team": null,
+      "suggested_reply": "สวัสดีครับ เชิญพนักงานทั้ง 20 คนพร้อมกันได้โดยใช้ไฟล์ CSV ครับ ไปที่ **Settings > Team** แล้วเลือกตัวเลือกเชิญสมาชิกจำนวนมากด้วย CSV\n\nหากจำนวนสมาชิกใหม่เกินจำนวนที่นั่งในแพ็กเกจ ระบบจะคิดค่าบริการส่วนต่างตามสัดส่วนในใบแจ้งหนี้รอบถัดไปครับ",
+      "handoff_summary": null,
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "1122c257e43740b6a5966e477cf90926",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 14648,
+        "total_tokens": 11049,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-2003",
+      "triage": {
+        "summary": "Priya gets an HTTP 500 error opening CRM in Chrome, while her colleague can access it and EU services are operational.",
+        "urgency": "medium",
+        "products": [
+          "crm"
+        ],
+        "issue_types": [
+          "bug"
+        ],
+        "sentiment": "neutral",
+        "language": "en",
+        "risk_flags": [],
+        "kb_article_ids": [
+          "KB-031"
+        ],
+        "action": "auto_respond",
+        "reasoning": "This appears limited to one user's browser session, not a confirmed outage; KB-031 provides browser troubleshooting steps. Risk flags assessed individually: no chargeback threat; no duplicate charges; no concrete deadline; no stated risk to the customer's revenue or customers; and no widespread outage, since the colleague can use CRM and the EU status is operational. No prior support tickets were found."
+      },
+      "assigned_team": null,
+      "suggested_reply": "Hi Priya,\n\nSince your colleague can access the CRM, this appears to be limited to your browser session. Please try these steps in Chrome:\n\n1. Clear your browser cache.\n2. Open the CRM in a private window.\n3. Disable your browser extensions and try again.\n\nIf the error continues, please let us know so the team can follow up. If it starts affecting multiple users, browsers, or devices, report that to support right away.",
+      "handoff_summary": null,
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "72d646eeafff4058b79d82fa668e8d43",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 14858,
+        "total_tokens": 10893,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base",
+          "check_service_status"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-2004",
+      "triage": {
+        "summary": "The customer cannot access their CRM account after forgetting their password and losing their authenticator phone.",
+        "urgency": "high",
+        "products": [
+          "crm"
+        ],
+        "issue_types": [
+          "account_access"
+        ],
+        "sentiment": "neutral",
+        "language": "en",
+        "risk_flags": [],
+        "kb_article_ids": [
+          "KB-060"
+        ],
+        "action": "route_specialist",
+        "reasoning": "The customer is blocked from their account. KB-060 covers password reset and 2FA recovery via backup codes or a workspace admin, but the thread does not establish that either recovery option is available, so a specialist may need to handle the 2FA reset. Risk flags checked: no chargeback threat, duplicate charges, stated deadline, revenue impact, or widespread outage is supported."
+      },
+      "assigned_team": "technical_support",
+      "suggested_reply": null,
+      "handoff_summary": "The customer cannot access their CRM account after forgetting their password and losing their authenticator phone.\nUrgency: high | Products: crm | Issues: account_access\nRisk flags: none | KB: KB-060\nReasoning: The customer is blocked from their account. KB-060 covers password reset and 2FA recovery via backup codes or a workspace admin, but the thread does not establish that either recovery option is available, so a specialist may need to handle the 2FA reset. Risk flags checked: no chargeback threat, duplicate charges, stated deadline, revenue impact, or widespread outage is supported.",
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "9d75589117d843d1a1c7efa952a6f7f5",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 12248,
+        "total_tokens": 7997,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-2005",
+      "triage": {
+        "summary": "The customer asks how quickly Enterprise support responds to a hypothetical company-wide outage; the documented first-response target for a P1 issue is 30 minutes, 24/7.",
+        "urgency": "low",
+        "products": [
+          "crm",
+          "erp"
+        ],
+        "issue_types": [
+          "usage_question"
+        ],
+        "sentiment": "neutral",
+        "language": "th",
+        "risk_flags": [],
+        "kb_article_ids": [
+          "KB-050"
+        ],
+        "action": "auto_respond",
+        "reasoning": "This is a general SLA question, not a report of an active outage, so no one is currently blocked. Risk flags checked individually: no chargeback threat; no duplicate charges; no concrete deadline; no stated customer revenue at risk; no widespread outage reported. KB-050 answers the question, so an automated response is appropriate."
+      },
+      "assigned_team": null,
+      "suggested_reply": "ตาม SLA ของ Enterprise หากเป็นเหตุ P1 เช่น ระบบไม่สามารถใช้งานได้ทั้ง workspace ทีมจะตอบกลับครั้งแรกภายใน 30 นาที ตลอด 24 ชั่วโมงทุกวัน และส่งต่อให้ทีมวิศวกร on-call พร้อมมีผู้ประสานงานคอยอัปเดตจนกว่าเหตุจะได้รับการแก้ไขครับ\n\nเวลานี้เป็นระยะเวลาสำหรับการตอบกลับครั้งแรก ไม่ใช่การรับประกันว่าเหตุจะได้รับการแก้ไขภายใน 30 นาทีครับ",
+      "handoff_summary": null,
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "13c351f3340b46f897b2b4e1930945d3",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 13652,
+        "total_tokens": 11938,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3001",
+      "triage": {
+        "summary": "The customer requests a refund for the last three months, while billing records show one successful $29.99 charge and do not establish eligibility for the requested refund.",
+        "urgency": "low",
+        "products": [
+          "crm"
+        ],
+        "issue_types": [
+          "billing"
+        ],
+        "sentiment": "negative",
+        "language": "en",
+        "risk_flags": [],
+        "kb_article_ids": [
+          "KB-013"
+        ],
+        "action": "route_specialist",
+        "reasoning": "A billing specialist must review the refund request; the available evidence does not establish that a refund is owed or that urgent escalation is needed. Risk flags reviewed individually: no chargeback threat; no duplicate charges (one successful transaction is recorded); no concrete deadline; no stated risk to the customer's revenue; and no widespread outage."
+      },
+      "assigned_team": "billing",
+      "suggested_reply": null,
+      "handoff_summary": "The customer requests a refund for the last three months, while billing records show one successful $29.99 charge and do not establish eligibility for the requested refund.\nUrgency: low | Products: crm | Issues: billing\nRisk flags: none | KB: KB-013\nReasoning: A billing specialist must review the refund request; the available evidence does not establish that a refund is owed or that urgent escalation is needed. Risk flags reviewed individually: no chargeback threat; no duplicate charges (one successful transaction is recorded); no concrete deadline; no stated risk to the customer's revenue; and no widespread outage.",
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "50fe2a4ae88f45138cbc384462bf3f6a",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 19456,
+        "total_tokens": 9354,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base",
+          "get_billing_transactions"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3002",
+      "triage": {
+        "summary": "Priya asks whether CRM supports native two-way Salesforce contact synchronization.",
+        "urgency": "low",
+        "products": [
+          "crm"
+        ],
+        "issue_types": [
+          "usage_question"
+        ],
+        "sentiment": "neutral",
+        "language": "en",
+        "risk_flags": [],
+        "kb_article_ids": [],
+        "action": "route_specialist",
+        "reasoning": "This is a non-urgent product capability question, and the knowledge-base search found no relevant answer; a specialist should confirm whether the integration is supported. No chargeback threat, duplicate charges, concrete deadline, revenue impact, or widespread outage is supported by the thread or tool results."
+      },
+      "assigned_team": "technical_support",
+      "suggested_reply": null,
+      "handoff_summary": "Priya asks whether CRM supports native two-way Salesforce contact synchronization.\nUrgency: low | Products: crm | Issues: usage_question\nRisk flags: none | KB: none\nReasoning: This is a non-urgent product capability question, and the knowledge-base search found no relevant answer; a specialist should confirm whether the integration is supported. No chargeback threat, duplicate charges, concrete deadline, revenue impact, or widespread outage is supported by the thread or tool results.",
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "1980a8afbc72489c9c23c93e2b824f00",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 12825,
+        "total_tokens": 8122,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3003",
+      "triage": {
+        "summary": "The customer is upset that a PNG dashboard export has a watermark; the knowledge base confirms that PNG exports on the Free plan include a watermark.",
+        "urgency": "low",
+        "products": [
+          "analytics"
+        ],
+        "issue_types": [
+          "usage_question"
+        ],
+        "sentiment": "negative",
+        "language": "en",
+        "risk_flags": [],
+        "kb_article_ids": [
+          "KB-040"
+        ],
+        "action": "auto_respond",
+        "reasoning": "The watermark is expected on the Free plan, and KB-040 explains that watermark-free exports are a Pro feature. The customer’s use of “URGENT” does not state a concrete deadline or business impact. No chargeback threat, duplicate charges, time-sensitive deadline, revenue impact, or widespread outage is supported. The knowledge base answers the issue, so no human investigation is needed."
+      },
+      "assigned_team": null,
+      "suggested_reply": "Hi Jordan,\n\nI understand the watermark is frustrating. PNG exports from Analytics Free include a watermark. To export without one, you’ll need Analytics Pro, which also unlocks PDF and PPTX exports and high-resolution image export.\n\nYou can upgrade from **Settings > Billing > Upgrade**. Pro is activated after payment is confirmed.",
+      "handoff_summary": null,
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "07d2fd9b40ca4e16a61f768efbc86ba8",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 13676,
+        "total_tokens": 10311,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3004",
+      "triage": {
+        "summary": "All 45 users are unable to access ERP during a confirmed Asia regional incident, and the customer’s month-end close is due by 5pm today.",
+        "urgency": "critical",
+        "products": [
+          "crm",
+          "erp"
+        ],
+        "issue_types": [
+          "outage"
+        ],
+        "sentiment": "positive",
+        "language": "en",
+        "risk_flags": [
+          "time_sensitive",
+          "widespread_outage"
+        ],
+        "kb_article_ids": [
+          "KB-031",
+          "KB-032",
+          "KB-050"
+        ],
+        "action": "escalate_human",
+        "reasoning": "Internal monitoring confirms a regional HTTP 500 incident affecting all products; the customer reports that all 45 users are blocked. Flag review: chargeback_threat—unsupported; duplicate_charges—unsupported; time_sensitive—supported by the 5pm month-end-close deadline; revenue_impact—not explicitly established; widespread_outage—supported by all 45 users being unable to access ERP and the confirmed regional incident. The confirmed outage and imminent deadline warrant immediate human ownership."
+      },
+      "assigned_team": "engineering_oncall",
+      "suggested_reply": "Hi Somchai, I’m sorry that all 45 users are unable to open ERP and are seeing HTTP 500 errors, especially with your month-end close due by 5pm today. Our monitoring confirms an issue affecting services in Asia. A specialist has taken ownership and is working on it. We’ll keep you updated as we learn more.",
+      "handoff_summary": "- Enterprise customer in Asia reports ERP returns HTTP 500 for all 45 users across every browser since this morning.\n- Internal monitoring confirms an active Asia API gateway incident causing elevated HTTP 500 errors across all products. Public status page still shows operational.\n- Customer history: no previous critical incidents; prior ERP ticket concerned an SSO login loop for two users and was resolved. No billing transactions were checked; this ticket does not raise a billing issue.\n- Impact: entire 45-seat organization is blocked from ERP; month-end close is due by 5pm today.\n- Customer is seeking help with the ERP being unavailable. Recommended next step: take immediate P1 ownership, investigate the confirmed regional incident, and keep the customer updated.",
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "fdfa3449170a4c45afdde07b34173810",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 18445,
+        "total_tokens": 12482,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base",
+          "check_service_status"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3005",
+      "triage": {
+        "summary": "The customer asks how to invite five users to CRM and whether their monthly invoice was charged twice; account records show one successful November transaction.",
+        "urgency": "low",
+        "products": [
+          "crm",
+          "erp"
+        ],
+        "issue_types": [
+          "usage_question",
+          "billing"
+        ],
+        "sentiment": "neutral",
+        "language": "th",
+        "risk_flags": [],
+        "kb_article_ids": [
+          "KB-070",
+          "KB-013"
+        ],
+        "action": "route_specialist",
+        "reasoning": "KB-070 explains how to invite members and how additional seats affect billing; billing records show one successful transaction, and KB-013 explains the duplicate-charge refund policy if a duplicate is confirmed. Flag check: chargeback_threat—no dispute threatened; duplicate_charges—not supported by the single transaction shown; time_sensitive—no deadline stated; revenue_impact—no business or customer revenue risk stated; widespread_outage—not applicable. No urgent issue or confirmed duplicate requiring human action is evidenced."
+      },
+      "assigned_team": "billing",
+      "suggested_reply": null,
+      "handoff_summary": "The customer asks how to invite five users to CRM and whether their monthly invoice was charged twice; account records show one successful November transaction.\nUrgency: low | Products: crm, erp | Issues: usage_question, billing\nRisk flags: none | KB: KB-070, KB-013\nReasoning: KB-070 explains how to invite members and how additional seats affect billing; billing records show one successful transaction, and KB-013 explains the duplicate-charge refund policy if a duplicate is confirmed. Flag check: chargeback_threat—no dispute threatened; duplicate_charges—not supported by the single transaction shown; time_sensitive—no deadline stated; revenue_impact—no business or customer revenue risk stated; widespread_outage—not applicable. No urgent issue or confirmed duplicate requiring human action is evidenced.",
+      "policy_overrides": [
+        "money_needs_human: action auto_respond -> route_specialist (only the billing team can check, refund or void charges)"
+      ],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "dc6cadab45e549918bf5d3a6fa2683b9",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 25790,
+        "total_tokens": 10971,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base",
+          "search_knowledge_base",
+          "get_billing_transactions"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3006",
+      "triage": {
+        "summary": "The customer cannot log in because the password reset email has not arrived, despite checking spam.",
+        "urgency": "high",
+        "products": [],
+        "issue_types": [
+          "account_access"
+        ],
+        "sentiment": "neutral",
+        "language": "en",
+        "risk_flags": [],
+        "kb_article_ids": [],
+        "action": "route_specialist",
+        "reasoning": "The customer is blocked from account access, and the available KB article does not address a missing reset email. Route to a specialist to investigate and help restore access. Risk flags, checked individually: chargeback_threat—none stated; duplicate_charges—no charges mentioned; time_sensitive—no deadline stated; revenue_impact—no business or customer impact stated; widespread_outage—only one customer's access problem is reported. The customer profile and history could not be retrieved, so subscribed products cannot be confirmed."
+      },
+      "assigned_team": "technical_support",
+      "suggested_reply": null,
+      "handoff_summary": "The customer cannot log in because the password reset email has not arrived, despite checking spam.\nUrgency: high | Products: none | Issues: account_access\nRisk flags: none | KB: none\nReasoning: The customer is blocked from account access, and the available KB article does not address a missing reset email. Route to a specialist to investigate and help restore access. Risk flags, checked individually: chargeback_threat—none stated; duplicate_charges—no charges mentioned; time_sensitive—no deadline stated; revenue_impact—no business or customer impact stated; widespread_outage—only one customer's access problem is reported. The customer profile and history could not be retrieved, so subscribed products cannot be confirmed.",
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "26378c22c8ea44beb663f7d5787232f4",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 16589,
+        "total_tokens": 8018,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3007",
+      "triage": {
+        "summary": "Priya reports an unrecognized login and an unauthorized CRM contacts export, and has already changed her password.",
+        "urgency": "high",
+        "products": [
+          "crm"
+        ],
+        "issue_types": [
+          "other"
+        ],
+        "sentiment": "negative",
+        "language": "en",
+        "risk_flags": [
+          "revenue_impact"
+        ],
+        "kb_article_ids": [
+          "KB-080"
+        ],
+        "action": "escalate_human",
+        "reasoning": "This is a suspected account compromise with a CRM contacts export, so the security team should promptly review the audit log and consider locking the account or revoking API tokens, as KB-080 advises. Risk flags: chargeback_threat—no; duplicate_charges—not relevant; time_sensitive—no concrete deadline; revenue_impact—yes, unauthorized access to customer contact data puts the customer's business and customers at risk; widespread_outage—no evidence of multiple users or an organization-wide service failure."
+      },
+      "assigned_team": "technical_support",
+      "suggested_reply": "I’m sorry—an unfamiliar login followed by a CRM contacts export you didn’t authorize is concerning. A specialist has taken ownership and is working on it. You’ve already changed your password; the recommended next steps are to sign out all other sessions in Settings > Security and turn on two-factor authentication. The security team can review the audit log and determine what was accessed. Please don’t share your password or two-factor authentication codes with anyone.",
+      "handoff_summary": "- Priya reports an unfamiliar-country login and a CRM contacts export downloaded about an hour before her message; she says neither was hers and that she has already changed her password.\n- Customer history: active CRM user with daily logins; no previous support tickets. Profile: Pro plan, one seat, EU region, CRM only.\n- KB-080 advises signing out other sessions and enabling two-factor authentication. It says the security team can review the audit log, lock the account, revoke API tokens, and determine what was accessed.\n- Customer impact: suspected account compromise and possible exposure of CRM contacts. No concrete deadline stated. Customer asks what else she should do.\n- No billing transactions or service-status incidents were checked; no evidence of a billing issue or platform outage gathered.\n- Recommended next step: security review of the audit log; assess whether to lock the account and revoke API tokens. Advise the customer to sign out other sessions and enable two-factor authentication.",
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "706b4cd06cad4dcf92ad1dd764d9104f",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 25594,
+        "total_tokens": 12789,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3008",
+      "triage": {
+        "summary": "The customer requests deletion of their account and personal data under GDPR; the privacy team must handle the request and confirm by email before deletion.",
+        "urgency": "low",
+        "products": [
+          "crm"
+        ],
+        "issue_types": [
+          "account_access"
+        ],
+        "sentiment": "neutral",
+        "language": "en",
+        "risk_flags": [],
+        "kb_article_ids": [
+          "KB-090"
+        ],
+        "action": "route_specialist",
+        "reasoning": "The account has no prior support tickets. KB-090 says account and personal-data deletion requests are handled by the privacy team and must come from the account owner's email. There is no stated deadline or business impact. No chargeback threat, duplicate charges, time-sensitive deadline, revenue impact, or widespread outage is supported."
+      },
+      "assigned_team": "technical_support",
+      "suggested_reply": null,
+      "handoff_summary": "The customer requests deletion of their account and personal data under GDPR; the privacy team must handle the request and confirm by email before deletion.\nUrgency: low | Products: crm | Issues: account_access\nRisk flags: none | KB: KB-090\nReasoning: The account has no prior support tickets. KB-090 says account and personal-data deletion requests are handled by the privacy team and must come from the account owner's email. There is no stated deadline or business impact. No chargeback threat, duplicate charges, time-sensitive deadline, revenue impact, or widespread outage is supported.",
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "78a2b6a06ccb4aa6a423bd695bfca570",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 9390,
+        "total_tokens": 7808,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3009",
+      "triage": {
+        "summary": "Priya reported that CRM’s macOS desktop app stayed in Light mode despite System Default, then confirmed updating to version 4.1.3 fixed it.",
+        "urgency": "low",
+        "products": [
+          "crm"
+        ],
+        "issue_types": [
+          "bug"
+        ],
+        "sentiment": "positive",
+        "language": "en",
+        "risk_flags": [],
+        "kb_article_ids": [
+          "KB-020"
+        ],
+        "action": "auto_respond",
+        "reasoning": "The documented update fixed the cosmetic issue, and the customer confirmed it works; no further action is needed. Risk review: no chargeback threat, duplicate charges, concrete deadline, revenue impact, or widespread outage is supported."
+      },
+      "assigned_team": null,
+      "suggested_reply": "Glad to hear the update fixed it! System Default wasn’t following your Mac’s appearance in CRM desktop app versions 4.1.2 and earlier. Version 4.1.3 fixes this. You can check for updates anytime from the app menu > Check for Updates. Thanks for letting us know!",
+      "handoff_summary": null,
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "61cc5d8ad530410da83735db6f8c6f16",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 12578,
+        "total_tokens": 10817,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3010",
+      "triage": {
+        "summary": "One analyst sees a blank page on the “Q3 Revenue” Analytics dashboard, although their other dashboards work and other users can open it.",
+        "urgency": "medium",
+        "products": [
+          "analytics"
+        ],
+        "issue_types": [
+          "bug"
+        ],
+        "sentiment": "neutral",
+        "language": "en",
+        "risk_flags": [],
+        "kb_article_ids": [
+          "KB-031"
+        ],
+        "action": "route_specialist",
+        "reasoning": "This is a single-user, single-dashboard issue, so it is not a widespread outage; the KB suggests browser troubleshooting for errors affecting one user, but the problem still needs investigation. Risk flags: no chargeback threat is stated; no duplicate charges are reported; no concrete deadline is stated; no revenue impact is described; and multiple users or the organization are not unable to use the service. The US incident is about delayed billing activation, not the reported Analytics problem, so it does not change the classification."
+      },
+      "assigned_team": "technical_support",
+      "suggested_reply": null,
+      "handoff_summary": "One analyst sees a blank page on the “Q3 Revenue” Analytics dashboard, although their other dashboards work and other users can open it.\nUrgency: medium | Products: analytics | Issues: bug\nRisk flags: none | KB: KB-031\nReasoning: This is a single-user, single-dashboard issue, so it is not a widespread outage; the KB suggests browser troubleshooting for errors affecting one user, but the problem still needs investigation. Risk flags: no chargeback threat is stated; no duplicate charges are reported; no concrete deadline is stated; no revenue impact is described; and multiple users or the organization are not unable to use the service. The US incident is about delayed billing activation, not the reported Analytics problem, so it does not change the classification.",
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "f2c565742e26460987954ae8051d5c34",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 15995,
+        "total_tokens": 9418,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base",
+          "check_service_status"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3011",
+      "triage": {
+        "summary": "The customer asks whether the CRM menu can be changed to Thai.",
+        "urgency": "low",
+        "products": [
+          "crm"
+        ],
+        "issue_types": [
+          "usage_question"
+        ],
+        "sentiment": "positive",
+        "language": "th",
+        "risk_flags": [],
+        "kb_article_ids": [],
+        "action": "route_specialist",
+        "reasoning": "This is a non-urgent product-usage question. The knowledge-base search did not find an article that answers whether Thai is supported, so a specialist should confirm. Risk flags assessed individually: chargeback_threat—none stated; duplicate_charges—none reported; time_sensitive—no deadline given; revenue_impact—no business or customer losses stated; widespread_outage—no service disruption reported."
+      },
+      "assigned_team": "technical_support",
+      "suggested_reply": null,
+      "handoff_summary": "The customer asks whether the CRM menu can be changed to Thai.\nUrgency: low | Products: crm | Issues: usage_question\nRisk flags: none | KB: none\nReasoning: This is a non-urgent product-usage question. The knowledge-base search did not find an article that answers whether Thai is supported, so a specialist should confirm. Risk flags assessed individually: chargeback_threat—none stated; duplicate_charges—none reported; time_sensitive—no deadline given; revenue_impact—no business or customer losses stated; widespread_outage—no service disruption reported.",
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "9bac042180524c8092ddbe02b1d42021",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 13346,
+        "total_tokens": 8444,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3012",
+      "triage": {
+        "summary": "The customer asks how to invite a teammate to the CRM workspace; the knowledge base directs admins to Settings > Team and notes that adding seats beyond the current limit may affect billing.",
+        "urgency": "low",
+        "products": [
+          "crm"
+        ],
+        "issue_types": [
+          "usage_question"
+        ],
+        "sentiment": "neutral",
+        "language": "en",
+        "risk_flags": [],
+        "kb_article_ids": [
+          "KB-070"
+        ],
+        "action": "auto_respond",
+        "reasoning": "The customer requests instructions and does not describe a blocker or concrete deadline, so the emphasized request for critical priority does not itself raise urgency. Risk checks: no chargeback threat; no duplicate charges; no time-sensitive deadline; no stated revenue impact; no widespread outage. KB-070 answers the question, so no specialist action is needed."
+      },
+      "assigned_team": null,
+      "suggested_reply": "To invite your teammate, go to **Settings > Team** and invite them there. You can invite members one at a time or in bulk using a CSV file.\n\nIf adding them exceeds your available seats, your next invoice will be updated on a prorated basis.",
+      "handoff_summary": null,
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "db08b7e4f2824db9b6df576bd1bbe609",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 12270,
+        "total_tokens": 10337,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3013",
+      "triage": {
+        "summary": "The customer requests an immediate refund of the last invoice, but the available records do not establish that the charge is eligible for a refund.",
+        "urgency": "medium",
+        "products": [
+          "analytics",
+          "erp"
+        ],
+        "issue_types": [
+          "billing"
+        ],
+        "sentiment": "negative",
+        "language": "en",
+        "risk_flags": [],
+        "kb_article_ids": [
+          "KB-013"
+        ],
+        "action": "route_specialist",
+        "reasoning": "The billing team must review refund eligibility; the customer gives no concrete deadline or chargeback threat. Risk flags checked individually: chargeback_threat—no; duplicate_charges—no evidence the two successful payments were for the same purchase; time_sensitive—no concrete deadline; revenue_impact—no business impact stated; widespread_outage—not applicable. The refund policy article is relevant, but the records do not show that its eligibility conditions are met."
+      },
+      "assigned_team": "billing",
+      "suggested_reply": null,
+      "handoff_summary": "The customer requests an immediate refund of the last invoice, but the available records do not establish that the charge is eligible for a refund.\nUrgency: medium | Products: analytics, erp | Issues: billing\nRisk flags: none | KB: KB-013\nReasoning: The billing team must review refund eligibility; the customer gives no concrete deadline or chargeback threat. Risk flags checked individually: chargeback_threat—no; duplicate_charges—no evidence the two successful payments were for the same purchase; time_sensitive—no concrete deadline; revenue_impact—no business impact stated; widespread_outage—not applicable. The refund policy article is relevant, but the records do not show that its eligibility conditions are met.",
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "9edfaffa55494258a3ecd989ac859ddf",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 19030,
+        "total_tokens": 9292,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base",
+          "get_billing_transactions"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3014",
+      "triage": {
+        "summary": "The customer asks how to schedule a weekly Analytics PDF report and reports that nobody on their team can load Analytics dashboards ahead of a board meeting at 2pm today.",
+        "urgency": "critical",
+        "products": [
+          "analytics"
+        ],
+        "issue_types": [
+          "usage_question",
+          "outage"
+        ],
+        "sentiment": "neutral",
+        "language": "en",
+        "risk_flags": [
+          "time_sensitive",
+          "widespread_outage"
+        ],
+        "kb_article_ids": [
+          "KB-031",
+          "KB-032",
+          "KB-050"
+        ],
+        "action": "escalate_human",
+        "reasoning": "The whole team cannot use Analytics, and the dashboards are needed for a meeting later today, so this is a critical, time-sensitive widespread outage requiring human ownership. No chargeback threat or duplicate charge is reported, and the thread does not establish that revenue is at risk. The US monitoring is degraded, but its listed billing incident does not explain the Analytics failure; the public status page may lag. The available articles support outage handling but do not explain how to schedule recurring PDF reports."
+      },
+      "assigned_team": "engineering_oncall",
+      "suggested_reply": "I understand that nobody on your team can load Analytics dashboards, especially with your board meeting at 2pm today. A specialist has taken ownership and is investigating. Our monitoring currently shows degraded service in the US region, although the public status page still shows operational.",
+      "handoff_summary": "- **Issue:** Customer first asked how to schedule a weekly PDF report in Analytics. At 09:30 UTC they reported that nobody on their team can load any Analytics dashboard; all see “Service unavailable.” The recurring-report question remains unanswered by the available KB articles.\n- **Evidence:** Customer history shows a prior Analytics scheduled-report email delay, resolved in September; it is a separate issue. US monitoring reports degraded service, while the public status page reports operational. The active incident returned by status checks concerns delayed billing activation after card authorization and does not explain this Analytics issue. No billing transactions were checked because the customer did not report a payment issue.\n- **Impact/deadline:** Enterprise account with 120 seats; team-wide Analytics impact. Dashboards are needed for a board meeting at 2pm today.\n- **Next step:** Treat as a P1 workspace-wide Analytics availability issue. Engineering on-call should investigate US Analytics service and keep the customer updated. Separately, provide guidance on scheduling weekly PDF reports once the outage is addressed.",
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "1d7cad773dc749bbbaddb780fb0c3352",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 30039,
+        "total_tokens": 18529,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base",
+          "search_knowledge_base",
+          "check_service_status",
+          "search_knowledge_base"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3015",
+      "triage": {
+        "summary": "The customer was repeatedly logged out of CRM, but reports the issue stopped after disabling a browser extension that blocked cookies.",
+        "urgency": "medium",
+        "products": [
+          "crm"
+        ],
+        "issue_types": [
+          "bug"
+        ],
+        "sentiment": "negative",
+        "language": "en",
+        "risk_flags": [],
+        "kb_article_ids": [
+          "KB-031"
+        ],
+        "action": "auto_respond",
+        "reasoning": "The session problem is resolved with a browser-side workaround, and there is no confirmed service incident or need for investigation. Risk flags checked individually: no chargeback threat; no duplicate charges; no concrete deadline; no stated risk to the customer's revenue or business; no widespread outage (the customer is the only affected user, the cause was a browser extension, and EU status is operational)."
+      },
+      "assigned_team": null,
+      "suggested_reply": "Sorry you were logged out repeatedly—that sounds frustrating. I’m glad disabling the cookie-blocking browser extension resolved it.\n\nIf it happens again, try a private window or clear your browser cache, and check whether another extension is interfering. Thanks for letting us know what fixed it.",
+      "handoff_summary": null,
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "b6397cbb2d594141ab1653ddc2e697dc",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 22396,
+        "total_tokens": 11822,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base",
+          "check_service_status"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3016",
+      "triage": {
+        "summary": "The customer asks whether multiple users can be invited at once; the knowledge base confirms admins can invite users in bulk using a CSV from Settings > Team.",
+        "urgency": "low",
+        "products": [
+          "crm"
+        ],
+        "issue_types": [
+          "usage_question"
+        ],
+        "sentiment": "neutral",
+        "language": "en",
+        "risk_flags": [],
+        "kb_article_ids": [
+          "KB-070"
+        ],
+        "action": "auto_respond",
+        "reasoning": "The documented CSV invitation option answers the question, so no specialist action is needed. Risk flags checked individually: no chargeback threat, no duplicate charges, no stated deadline, no revenue impact, and no widespread outage."
+      },
+      "assigned_team": null,
+      "suggested_reply": "You’re right—bulk invites are supported. Go to **Settings > Team** and upload a CSV to invite multiple members at once. Please note that adding members beyond your seat count updates your next invoice on a prorated basis.",
+      "handoff_summary": null,
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "61d287ab76314b6cacec1bfdb15da63d",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 9899,
+        "total_tokens": 10252,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3017",
+      "triage": {
+        "summary": "The customer cannot save newly created CRM contacts, blocking them from logging client calls.",
+        "urgency": "high",
+        "products": [
+          "crm"
+        ],
+        "issue_types": [
+          "bug"
+        ],
+        "sentiment": "negative",
+        "language": "en",
+        "risk_flags": [],
+        "kb_article_ids": [],
+        "action": "route_specialist",
+        "reasoning": "Saving contacts is a core CRM function and the customer is blocked, but the issue is reported for one user and the EU service status is operational, so route it for specialist investigation. Risk flags checked individually: chargeback_threat—no bank dispute threat; duplicate_charges—no duplicate charges reported; time_sensitive—client calls are happening today, but no concrete deadline is stated; revenue_impact—the customer cannot log calls, but no threatened revenue, customers, or deals are specified; widespread_outage—no evidence of multiple users or the organization being affected."
+      },
+      "assigned_team": "technical_support",
+      "suggested_reply": null,
+      "handoff_summary": "The customer cannot save newly created CRM contacts, blocking them from logging client calls.\nUrgency: high | Products: crm | Issues: bug\nRisk flags: none | KB: none\nReasoning: Saving contacts is a core CRM function and the customer is blocked, but the issue is reported for one user and the EU service status is operational, so route it for specialist investigation. Risk flags checked individually: chargeback_threat—no bank dispute threat; duplicate_charges—no duplicate charges reported; time_sensitive—client calls are happening today, but no concrete deadline is stated; revenue_impact—the customer cannot log calls, but no threatened revenue, customers, or deals are specified; widespread_outage—no evidence of multiple users or the organization being affected.",
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "dd834df83d114d899589d2c3c21b092b",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 17142,
+        "total_tokens": 8762,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base",
+          "check_service_status"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3018",
+      "triage": {
+        "summary": "The customer asks whether an agency partner program is available for reselling CRM to clients.",
+        "urgency": "low",
+        "products": [
+          "crm"
+        ],
+        "issue_types": [
+          "other"
+        ],
+        "sentiment": "neutral",
+        "language": "en",
+        "risk_flags": [],
+        "kb_article_ids": [],
+        "action": "route_specialist",
+        "reasoning": "The knowledge-base results do not answer the partnership inquiry, so route it to the appropriate partnerships or sales team. No chargeback threat, duplicate charges, concrete deadline, customer revenue impact, or widespread outage is supported by the thread or tool results."
+      },
+      "assigned_team": "technical_support",
+      "suggested_reply": null,
+      "handoff_summary": "The customer asks whether an agency partner program is available for reselling CRM to clients.\nUrgency: low | Products: crm | Issues: other\nRisk flags: none | KB: none\nReasoning: The knowledge-base results do not answer the partnership inquiry, so route it to the appropriate partnerships or sales team. No chargeback threat, duplicate charges, concrete deadline, customer revenue impact, or widespread outage is supported by the thread or tool results.",
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "f6b980f547fa4381b90d282aeff52ed5",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 10255,
+        "total_tokens": 7475,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3019",
+      "triage": {
+        "summary": "The customer reports that 20 purchased seats have not appeared in Team settings despite a successful $1,080 charge.",
+        "urgency": "high",
+        "products": [
+          "analytics",
+          "erp"
+        ],
+        "issue_types": [
+          "billing"
+        ],
+        "sentiment": "neutral",
+        "language": "en",
+        "risk_flags": [],
+        "kb_article_ids": [],
+        "action": "route_specialist",
+        "reasoning": "The payment succeeded, but the added seats are unavailable, so a billing specialist should investigate the seat activation; no refund or reversal is yet requested. Risk flags checked individually: chargeback_threat—no dispute threat; duplicate_charges—only one relevant successful charge is shown; time_sensitive—no concrete deadline; revenue_impact—no explicit business revenue at risk; widespread_outage—this is a seat availability issue, not a reported outage affecting existing users or the organization. The available articles do not explain how to resolve seats missing after a successful payment."
+      },
+      "assigned_team": "billing",
+      "suggested_reply": null,
+      "handoff_summary": "The customer reports that 20 purchased seats have not appeared in Team settings despite a successful $1,080 charge.\nUrgency: high | Products: analytics, erp | Issues: billing\nRisk flags: none | KB: none\nReasoning: The payment succeeded, but the added seats are unavailable, so a billing specialist should investigate the seat activation; no refund or reversal is yet requested. Risk flags checked individually: chargeback_threat—no dispute threat; duplicate_charges—only one relevant successful charge is shown; time_sensitive—no concrete deadline; revenue_impact—no explicit business revenue at risk; widespread_outage—this is a seat availability issue, not a reported outage affecting existing users or the organization. The available articles do not explain how to resolve seats missing after a successful payment.",
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "07c2a6c044f54fde9b735cb4f6fe0cdb",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 26591,
+        "total_tokens": 10207,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base",
+          "get_billing_transactions"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3020",
+      "triage": {
+        "summary": "The customer asks how to export an Analytics dashboard as a PDF; their Enterprise plan includes PDF export, available via Share > Export > PDF.",
+        "urgency": "low",
+        "products": [
+          "analytics"
+        ],
+        "issue_types": [
+          "usage_question"
+        ],
+        "sentiment": "neutral",
+        "language": "ja",
+        "risk_flags": [],
+        "kb_article_ids": [
+          "KB-040"
+        ],
+        "action": "auto_respond",
+        "reasoning": "KB-040 directly explains how to export a dashboard as PDF, and the customer's Enterprise plan includes the required export feature, so no human action is needed. Risk flag review: no chargeback threat, duplicate charges, stated deadline, revenue impact, or widespread outage is supported by the thread or tool results."
+      },
+      "assigned_team": null,
+      "suggested_reply": "AnalyticsのダッシュボードをPDFでエクスポートするには、対象のダッシュボードを開き、**［共有］>［エクスポート］>［PDF］**を選択してください。EnterpriseプランにはPDFエクスポート機能が含まれています。",
+      "handoff_summary": null,
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "02ea253d2f7740c6976f7166c3a980b9",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 10593,
+        "total_tokens": 9995,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3021",
+      "triage": {
+        "summary": "Priya asks whether CRM deals will have a Kanban board view.",
+        "urgency": "low",
+        "products": [
+          "crm"
+        ],
+        "issue_types": [
+          "feature_request"
+        ],
+        "sentiment": "positive",
+        "language": "en",
+        "risk_flags": [],
+        "kb_article_ids": [],
+        "action": "route_specialist",
+        "reasoning": "This is a non-urgent feature request, and no relevant knowledge-base article answers whether the view is available or planned. No chargeback threat, duplicate charge, concrete deadline, revenue impact, or widespread outage is supported; route the request for the product team to log or review."
+      },
+      "assigned_team": "product",
+      "suggested_reply": null,
+      "handoff_summary": "Priya asks whether CRM deals will have a Kanban board view.\nUrgency: low | Products: crm | Issues: feature_request\nRisk flags: none | KB: none\nReasoning: This is a non-urgent feature request, and no relevant knowledge-base article answers whether the view is available or planned. No chargeback threat, duplicate charge, concrete deadline, revenue impact, or widespread outage is supported; route the request for the product team to log or review.",
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "1737c6126f7d4e0fb8e1fc490c2528ce",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 8812,
+        "total_tokens": 7899,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3022",
+      "triage": {
+        "summary": "ลูกค้าถามวิธีส่งออกข้อมูล CRM ทั้งหมดเป็น CSV เพื่อใช้ตรวจสอบภายในช่วงสิ้นเดือนนี้",
+        "urgency": "low",
+        "products": [
+          "crm"
+        ],
+        "issue_types": [
+          "usage_question"
+        ],
+        "sentiment": "neutral",
+        "language": "th",
+        "risk_flags": [
+          "time_sensitive"
+        ],
+        "kb_article_ids": [
+          "KB-090"
+        ],
+        "action": "auto_respond",
+        "reasoning": "เป็นคำถามวิธีใช้งานที่ KB-090 ตอบได้ โดยระบุขั้นตอนส่งออกข้อมูลเป็น CSV; ยังไม่มีผู้ใช้ถูกบล็อกหรือจำเป็นต้องให้ทีมดำเนินการ. ตรวจความเสี่ยงทีละข้อ: ไม่มีการขู่ chargeback, ไม่มีหลักฐานการเรียกเก็บเงินซ้ำ, มีกรอบเวลาตรวจสอบภายในสิ้นเดือนจึงทำเครื่องหมาย time_sensitive, ไม่มีการระบุความเสี่ยงต่อรายได้ของธุรกิจ และไม่มีปัญหาที่กระทบผู้ใช้หลายคนหรือทั้งองค์กร."
+      },
+      "assigned_team": null,
+      "suggested_reply": "ได้ครับ หากคุณเป็น Workspace admin ให้ไปที่ **Settings > Data > Export** แล้วเลือกส่งออกข้อมูล ระบบจะส่งไฟล์ CSV ให้ทางอีเมลเมื่อพร้อม โดยข้อมูลที่ส่งออกได้รวมถึง contacts และ deals ครับ",
+      "handoff_summary": null,
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "5a7e2ad632ef4c7ca537aec3268f815e",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 16707,
+        "total_tokens": 11089,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-1001",
+      "triage": {
+        "summary": "The Analytics Pro upgrade failed to activate despite three $29.99 pending authorizations, and the customer needs Pro exports for a presentation in two hours and threatens to dispute the charges.",
+        "urgency": "critical",
+        "products": [
+          "analytics"
+        ],
+        "issue_types": [
+          "billing"
+        ],
+        "sentiment": "negative",
+        "language": "en",
+        "risk_flags": [
+          "chargeback_threat",
+          "duplicate_charges",
+          "time_sensitive"
+        ],
+        "kb_article_ids": [
+          "KB-012",
+          "KB-013",
+          "KB-001",
+          "KB-040"
+        ],
+        "action": "escalate_human",
+        "reasoning": "Critical urgency and immediate human ownership are warranted: the customer has a presentation in two hours, explicitly threatens a bank dispute, and needs billing review of three pending authorizations and the failed plan activation. Risk flags, checked individually: chargeback_threat is supported by the explicit threat to dispute all charges; duplicate_charges is supported by three pending transactions for the same $29.99 upgrade; time_sensitive is supported by the presentation deadline in two hours; revenue_impact is not supported because no risk to the customer's business revenue, customers, or deals is stated; widespread_outage is not supported because this affects one account's upgrade, and the regional incident is a billing activation delay rather than a product outage."
+      },
+      "assigned_team": "billing",
+      "suggested_reply": "I’m sorry you’re seeing three $29.99 charges while your account still shows Free, especially with your presentation coming up. Our billing records show three pending transactions, and your Pro upgrade has not activated. A billing specialist has taken ownership and is working on this. I understand you’re concerned about disputing the charges; I can’t confirm a resolution or timing yet.",
+      "handoff_summary": "- Customer first contacted support today; no prior tickets.\n- Attempted to upgrade Analytics Free to Pro. Billing records show three $29.99 USD transactions, all pending after card authorization; subscription status is upgrade_pending and Pro access is not active.\n- US status tool reports an active incident: subscription activation delayed after successful card authorization. Public status page says operational.\n- Customer needs Pro exports for a presentation in two hours and says they will dispute all charges with their bank if they are not reversed by end of day.\n- Customer is asking for the charges to be addressed and Pro access enabled.\n- Recommended next step: review the three pending authorizations and failed activations, determine whether any charge was captured, and resolve billing/plan activation as appropriate. The billing team is the only team that can void authorizations or issue refunds.",
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "583ec4c0a88f4967a67bf27ce1a06200",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 19333,
+        "total_tokens": 13889,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base",
+          "get_billing_transactions",
+          "check_service_status"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-1002",
+      "triage": {
+        "summary": "A confirmed Asia API gateway incident is causing HTTP 500 errors and preventing the customer's workspace from using CRM and ERP, putting customer activity and a major-client deal at risk.",
+        "urgency": "critical",
+        "products": [
+          "crm",
+          "erp"
+        ],
+        "issue_types": [
+          "outage"
+        ],
+        "sentiment": "negative",
+        "language": "th",
+        "risk_flags": [
+          "time_sensitive",
+          "revenue_impact",
+          "widespread_outage"
+        ],
+        "kb_article_ids": [
+          "KB-031",
+          "KB-032",
+          "KB-050"
+        ],
+        "action": "escalate_human",
+        "reasoning": "Critical: internal monitoring confirms an active Asia outage affecting the shared API gateway, and multiple colleagues and browsers are unable to use the service. Risk flags checked individually: chargeback_threat—absent; duplicate_charges—absent; time_sensitive—supported by the demo with a major client this afternoon; revenue_impact—supported by customer complaints and the stated risk of losing the deal; widespread_outage—supported by multiple colleagues being unable to access the workspace and the confirmed regional incident. Escalate for human ownership under the Enterprise P1 guidance."
+      },
+      "assigned_team": "engineering_oncall",
+      "suggested_reply": "ขออภัยที่คุณและทีมไม่สามารถเข้าใช้งานได้ครับ เราตรวจพบปัญหา HTTP 500 บนระบบ API ในภูมิภาคเอเชีย ซึ่งส่งผลให้ผลิตภัณฑ์ไม่พร้อมใช้งาน ขณะนี้ผู้เชี่ยวชาญรับผิดชอบกรณีนี้แล้วและกำลังตรวจสอบปัญหาอยู่ แม้หน้า status จะยังแสดงว่าระบบปกติ แต่การตรวจสอบภายในพบปัญหาในภูมิภาคเอเชียครับ",
+      "handoff_summary": "- Enterprise customer in Asia (45 seats), using CRM and ERP, reports HTTP 500 errors since 07:00 UTC. Multiple colleagues and browsers/devices are affected.\n- Internal monitoring confirms an active Asia incident: elevated HTTP 500 errors on the shared API gateway, with all products unavailable. The public status page still shows operational.\n- Customer history: no previous critical incidents; prior CRM usage question and a two-user ERP SSO issue, both resolved.\n- No billing or payment issue was raised; no transaction lookup was performed.\n- Impact: customers are complaining, and a major-client demo this afternoon may be lost if service remains unavailable. Customer asks us to check the Asia region.\n- Recommended next step: take P1 ownership, engage engineering on-call to investigate the confirmed regional incident, and keep the customer updated.",
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "655dded0ff754a9099ef4fcf566b22ee",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 17941,
+        "total_tokens": 12444,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base",
+          "check_service_status"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-1003",
+      "triage": {
+        "summary": "The customer cannot access the gradually rolling-out Dark theme and reports that System Default stays light in the CRM macOS app; they also suggest scheduled theme switching.",
+        "urgency": "medium",
+        "products": [
+          "crm"
+        ],
+        "issue_types": [
+          "bug",
+          "feature_request"
+        ],
+        "sentiment": "positive",
+        "language": "en",
+        "risk_flags": [],
+        "kb_article_ids": [
+          "KB-020"
+        ],
+        "action": "auto_respond",
+        "reasoning": "KB-020 explains that Dark is being gradually enabled for Pro accounts, documents the macOS desktop bug in versions 4.1.2 and earlier with an update and web-app workaround, and states that scheduled switching is not supported yet. The documented information answers the issues; no urgent impact or human action is indicated. Risk flags: no chargeback threat, duplicate charges, concrete deadline, revenue impact, or widespread outage is supported."
+      },
+      "assigned_team": null,
+      "suggested_reply": "Hi Priya,\n\nDark mode is being rolled out gradually to Pro accounts, so it may not be enabled for yours yet. Support can request early access if you’d like.\n\nFor the System Default issue, CRM desktop app versions 4.1.2 and earlier have a known issue where they stay in light mode instead of following macOS appearance. In the app, go to **Check for Updates** and update to version **4.1.3**. As a workaround, the web app follows System Default correctly.\n\nScheduling a theme change (such as switching at 6pm) isn’t supported yet. Thanks for the suggestion!",
+      "handoff_summary": null,
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "1c1ac902db2b4704a342492c79eece69",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 20094,
+        "total_tokens": 13182,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base",
+          "search_knowledge_base"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-2001",
+      "triage": {
+        "summary": "The customer asks whether PowerPoint dashboard exports are available on the Free plan and what export features Pro adds.",
+        "urgency": "low",
+        "products": [
+          "analytics"
+        ],
+        "issue_types": [
+          "usage_question"
+        ],
+        "sentiment": "neutral",
+        "language": "en",
+        "risk_flags": [],
+        "kb_article_ids": [
+          "KB-040"
+        ],
+        "action": "auto_respond",
+        "reasoning": "The knowledge base explains that Free supports watermarked PNG exports, while Pro adds PDF and PPTX exports without watermarks, high-resolution image export, and custom slide sizes. No human action is needed. No chargeback threat, duplicate charges, concrete deadline, revenue impact, or widespread outage is supported."
+      },
+      "assigned_team": null,
+      "suggested_reply": "Hi Jordan,\n\nFree accounts can export dashboards as PNG files with a watermark, but PowerPoint (PPTX) export isn’t available on the Free plan.\n\nAnalytics Pro adds PDF and PPTX exports for dashboards and reports without watermarks, plus high-resolution image export and custom slide sizes. To export, open a dashboard or report and choose **Share > Export**. The options become available once Pro is active on your account.",
+      "handoff_summary": null,
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "726575a2c4ca498aa89ea6c70b6c4a2a",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 12547,
+        "total_tokens": 10083,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-2002",
+      "triage": {
+        "summary": "The customer asks how to bulk-invite 20 new sales employees to CRM before they start next week.",
+        "urgency": "low",
+        "products": [
+          "crm"
+        ],
+        "issue_types": [
+          "usage_question"
+        ],
+        "sentiment": "positive",
+        "language": "th",
+        "risk_flags": [],
+        "kb_article_ids": [
+          "KB-070"
+        ],
+        "action": "auto_respond",
+        "reasoning": "KB-070 explains that admins can invite team members in bulk using a CSV from Settings > Team, so no specialist action is needed. Risk flags: no chargeback threat, duplicate charges, or revenue impact is stated; next week is a planned onboarding timeframe, not a concrete urgent deadline; and there is no outage or widespread impact."
+      },
+      "assigned_team": null,
+      "suggested_reply": "สวัสดีครับ เชิญพนักงานหลายคนพร้อมกันได้ครับ โดยผู้ดูแลระบบไปที่ **Settings > Team** แล้วอัปโหลดรายชื่อผ่านไฟล์ CSV ได้ ไม่จำเป็นต้องเชิญทีละคนครับ\n\nหากเพิ่มสมาชิกเกินจำนวนที่นั่งปัจจุบัน ค่าใช้จ่ายจะถูกคิดตามสัดส่วนและรวมในใบแจ้งหนี้รอบถัดไปครับ",
+      "handoff_summary": null,
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "4a51e53a032d4ecfb105567dcdb1f12c",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 11777,
+        "total_tokens": 10546,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-2003",
+      "triage": {
+        "summary": "The customer gets an HTTP 500 opening CRM in Chrome, while a colleague can access it normally.",
+        "urgency": "medium",
+        "products": [
+          "crm"
+        ],
+        "issue_types": [
+          "bug"
+        ],
+        "sentiment": "neutral",
+        "language": "en",
+        "risk_flags": [],
+        "kb_article_ids": [
+          "KB-031"
+        ],
+        "action": "auto_respond",
+        "reasoning": "The error appears limited to one user: the colleague can use CRM, and EU service status is operational with no active incidents. KB-031 provides troubleshooting steps for single-user HTTP 500 errors. No chargeback threat, duplicate charges, concrete deadline, stated revenue impact, or widespread outage is supported."
+      },
+      "assigned_team": null,
+      "suggested_reply": "Hi Priya,\n\nSorry you’re running into a 500 error in CRM. Since your colleague can access it, please try these steps in Chrome:\n\n1. Clear your browser cache.\n2. Open CRM in a private window.\n3. Disable your browser extensions and try again.\n\nIf the error continues, reply with your workspace ID and region so we can follow up. Your region is EU.",
+      "handoff_summary": null,
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "dc75140b785e4f7b921b4d2dcc858e59",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 11691,
+        "total_tokens": 10457,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base",
+          "check_service_status"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-2004",
+      "triage": {
+        "summary": "The customer forgot their password and lost their authenticator device, leaving them unable to access their CRM account.",
+        "urgency": "high",
+        "products": [
+          "crm"
+        ],
+        "issue_types": [
+          "account_access"
+        ],
+        "sentiment": "neutral",
+        "language": "en",
+        "risk_flags": [],
+        "kb_article_ids": [
+          "KB-060"
+        ],
+        "action": "route_specialist",
+        "reasoning": "KB-060 recommends a password reset and then a backup code or workspace-admin 2FA reset. The account has one seat and the customer may need specialist help if they have no backup code, so route for account recovery. Risk flags assessed individually: no chargeback threat, duplicate charges, concrete deadline, stated revenue impact, or evidence of a widespread outage."
+      },
+      "assigned_team": "technical_support",
+      "suggested_reply": null,
+      "handoff_summary": "The customer forgot their password and lost their authenticator device, leaving them unable to access their CRM account.\nUrgency: high | Products: crm | Issues: account_access\nRisk flags: none | KB: KB-060\nReasoning: KB-060 recommends a password reset and then a backup code or workspace-admin 2FA reset. The account has one seat and the customer may need specialist help if they have no backup code, so route for account recovery. Risk flags assessed individually: no chargeback threat, duplicate charges, concrete deadline, stated revenue impact, or evidence of a widespread outage.",
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "bbdc55d3772d49baa0fcbae6f031f467",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 13544,
+        "total_tokens": 8956,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-2005",
+      "triage": {
+        "summary": "The customer asks what first-response time the Enterprise SLA provides for a company-wide outage; KB-050 states that P1 issues receive a response within 30 minutes, 24/7.",
+        "urgency": "low",
+        "products": [
+          "crm",
+          "erp"
+        ],
+        "issue_types": [
+          "usage_question"
+        ],
+        "sentiment": "neutral",
+        "language": "th",
+        "risk_flags": [],
+        "kb_article_ids": [
+          "KB-050"
+        ],
+        "action": "auto_respond",
+        "reasoning": "This is a general SLA question, not a report of an active outage or a blocked service. The history shows no previous critical incidents. Flag review: no chargeback threat, duplicate charges, concrete deadline, stated revenue impact, or actual widespread outage is supported by the thread or tool results. KB-050 directly answers the question, so an automated response is appropriate."
+      },
+      "assigned_team": null,
+      "suggested_reply": "สำหรับแพ็กเกจ Enterprise หากระบบไม่พร้อมใช้งานทั่วทั้ง Workspace (ระดับ P1) ทีมซัพพอร์ตจะตอบกลับครั้งแรกภายใน 30 นาที ตลอด 24 ชั่วโมงทุกวันครับ ทีมวิศวกร on-call จะรับช่วงตรวจสอบ และผู้ประสานงานที่ได้รับมอบหมายจะแจ้งความคืบหน้าจนกว่าจะแก้ไขได้ครับ",
+      "handoff_summary": null,
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "d956632b0ae7404fad683b1f50e0986f",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 12459,
+        "total_tokens": 10836,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3001",
+      "triage": {
+        "summary": "The customer requests a refund for the last three months, while the billing record shows one successful $29.99 USD charge on November 1 and does not establish eligibility for a refund.",
+        "urgency": "low",
+        "products": [
+          "crm"
+        ],
+        "issue_types": [
+          "billing"
+        ],
+        "sentiment": "negative",
+        "language": "en",
+        "risk_flags": [],
+        "kb_article_ids": [
+          "KB-013"
+        ],
+        "action": "route_specialist",
+        "reasoning": "Route to billing to review the request; no refund has been approved, and the available transaction record does not confirm the other requested charges or refund eligibility. Risk flags: no chargeback threat; no duplicate charges shown; no concrete deadline; no stated risk to the customer's business or revenue; no widespread outage."
+      },
+      "assigned_team": "billing",
+      "suggested_reply": null,
+      "handoff_summary": "The customer requests a refund for the last three months, while the billing record shows one successful $29.99 USD charge on November 1 and does not establish eligibility for a refund.\nUrgency: low | Products: crm | Issues: billing\nRisk flags: none | KB: KB-013\nReasoning: Route to billing to review the request; no refund has been approved, and the available transaction record does not confirm the other requested charges or refund eligibility. Risk flags: no chargeback threat; no duplicate charges shown; no concrete deadline; no stated risk to the customer's business or revenue; no widespread outage.",
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "971b7bb0a3524513a178c73ffc80b678",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 15697,
+        "total_tokens": 8720,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base",
+          "get_billing_transactions"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3002",
+      "triage": {
+        "summary": "Priya asks whether CRM supports native two-way Salesforce contact sync and expresses interest in having that capability.",
+        "urgency": "low",
+        "products": [
+          "crm"
+        ],
+        "issue_types": [
+          "feature_request"
+        ],
+        "sentiment": "neutral",
+        "language": "en",
+        "risk_flags": [],
+        "kb_article_ids": [],
+        "action": "route_specialist",
+        "reasoning": "This is a non-urgent feature inquiry/request, and the knowledge-base results did not include an article that answers it; route it for a specialist to confirm support or log the request. Risk flags checked individually: no chargeback threat, no duplicate charges, no concrete deadline, no stated revenue impact, and no widespread outage."
+      },
+      "assigned_team": "product",
+      "suggested_reply": null,
+      "handoff_summary": "Priya asks whether CRM supports native two-way Salesforce contact sync and expresses interest in having that capability.\nUrgency: low | Products: crm | Issues: feature_request\nRisk flags: none | KB: none\nReasoning: This is a non-urgent feature inquiry/request, and the knowledge-base results did not include an article that answers it; route it for a specialist to confirm support or log the request. Risk flags checked individually: no chargeback threat, no duplicate charges, no concrete deadline, no stated revenue impact, and no widespread outage.",
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "b10973541dab4794a747fd67ffc12a20",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 10979,
+        "total_tokens": 7997,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3003",
+      "triage": {
+        "summary": "The PNG watermark is expected on Analytics Free exports, but the customer’s attempted Pro upgrade has not activated and the account shows three pending $29.99 authorization holds for that upgrade.",
+        "urgency": "medium",
+        "products": [
+          "analytics"
+        ],
+        "issue_types": [
+          "usage_question",
+          "billing"
+        ],
+        "sentiment": "negative",
+        "language": "en",
+        "risk_flags": [
+          "duplicate_charges"
+        ],
+        "kb_article_ids": [
+          "KB-040",
+          "KB-001"
+        ],
+        "action": "escalate_human",
+        "reasoning": "The watermark is expected on the Free plan, but the failed Pro activation and three pending authorizations for the same upgrade need billing review; KB-001 advises contacting support for upgrade activation errors. Risk flags: chargeback_threat—no threat stated; duplicate_charges—three pending $29.99 transactions for the same Pro upgrade; time_sensitive—no concrete deadline; revenue_impact—no customer business or revenue risk stated; widespread_outage—no multiple users or organization-wide outage. Escalate to a human to investigate the upgrade and authorization holds; the customer is not otherwise blocked from using Free exports."
+      },
+      "assigned_team": "billing",
+      "suggested_reply": "I understand why seeing a watermark on your dashboard PNG export is frustrating. Analytics Free exports include a watermark, and your Pro upgrade has not activated. A billing specialist has taken ownership and is working on the upgrade and the three pending $29.99 authorizations shown in your account. I can’t confirm an outcome or timing yet.",
+      "handoff_summary": "- Customer reports a watermark on a PNG exported from an Analytics dashboard and says it looks terrible; they ask why it is there.\n- KB-040 confirms PNG exports on the Free plan include a watermark. The customer has Analytics Free; Pro export features are available once the plan is active.\n- Billing records show a Pro upgrade is pending after activation failed following card authorization. Three $29.99 transactions are pending, each associated with a Pro upgrade attempt.\n- History: first support contact; customer has one seat and no past tickets. No deadline or business/revenue impact stated.\n- Recommended next step: billing specialist to review the failed Pro activation and pending authorizations, and advise the customer on their status. Do not promise a refund or timeline.",
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "a7cbf298ddf54d23b653b22480ade4b2",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 42221,
+        "total_tokens": 17207,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base",
+          "get_billing_transactions"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3004",
+      "triage": {
+        "summary": "A confirmed Asia API gateway incident is causing HTTP 500 errors across products; all 45 users are blocked from ERP ahead of the customer’s month-end close deadline.",
+        "urgency": "critical",
+        "products": [
+          "crm",
+          "erp"
+        ],
+        "issue_types": [
+          "outage"
+        ],
+        "sentiment": "positive",
+        "language": "en",
+        "risk_flags": [
+          "time_sensitive",
+          "widespread_outage"
+        ],
+        "kb_article_ids": [
+          "KB-031",
+          "KB-032",
+          "KB-050"
+        ],
+        "action": "escalate_human",
+        "reasoning": "Internal monitoring confirms an active Asia incident affecting the shared API gateway and all products, despite the public status page showing operational. The outage impacts all 45 users, and the stated 5pm month-end close deadline makes it time-sensitive, so engineering on-call should take ownership now. Flag review: no chargeback threat or duplicate charges are indicated; no explicit revenue loss or risk to customers/deals is stated; time_sensitive is supported by the deadline; widespread_outage is supported by the report that all users are blocked and the confirmed regional incident."
+      },
+      "assigned_team": "engineering_oncall",
+      "suggested_reply": "We’re sorry that your team is unable to open ERP and is seeing HTTP 500 errors, especially with your month-end close due by 5pm today. Our monitoring confirms a service issue in the Asia region affecting access to products. A specialist has taken ownership and is working on it. We’ll share an update as soon as we have confirmed information.",
+      "handoff_summary": "- Enterprise customer in Asia; 45 seats, using ERP and CRM.\n- Reports that since this morning all 45 users cannot open ERP; HTTP 500 errors occur on every browser. Month-end close is due by 5pm today.\n- Internal service status confirms an active Asia incident: elevated HTTP 500 errors on the shared API gateway, affecting all products. Public status page still showed operational.\n- Customer history: no previous critical incidents; prior ERP SSO issue for two users was resolved. No billing transactions were checked because this report concerns service availability.\n- Customer is asking for help restoring access to ERP.\n- Recommended next step: take urgent ownership of the confirmed outage, investigate and coordinate response; keep the customer updated. A specialist has taken ownership and is working on it.",
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "461598baf2c843469b645851ec7459e0",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 19062,
+        "total_tokens": 12578,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base",
+          "check_service_status"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3005",
+      "triage": {
+        "summary": "The customer asks how to add five users to CRM and wants the suspected duplicate charge on this month’s invoice checked; records show one successful transaction but do not confirm whether another charge occurred.",
+        "urgency": "medium",
+        "products": [
+          "crm"
+        ],
+        "issue_types": [
+          "usage_question",
+          "billing"
+        ],
+        "sentiment": "neutral",
+        "language": "th",
+        "risk_flags": [],
+        "kb_article_ids": [
+          "KB-070",
+          "KB-013"
+        ],
+        "action": "route_specialist",
+        "reasoning": "KB-070 answers how to invite users, and the customer has previously asked about CRM invitations. The billing records show one successful transaction, so a duplicate is not established; a billing specialist should investigate the reported discrepancy. No concrete deadline, business impact, outage, or chargeback threat is stated. Risk flags checked individually: chargeback_threat—no; duplicate_charges—not supported by the single recorded successful transaction; time_sensitive—no deadline stated; revenue_impact—not stated; widespread_outage—not reported."
+      },
+      "assigned_team": "billing",
+      "suggested_reply": null,
+      "handoff_summary": "The customer asks how to add five users to CRM and wants the suspected duplicate charge on this month’s invoice checked; records show one successful transaction but do not confirm whether another charge occurred.\nUrgency: medium | Products: crm | Issues: usage_question, billing\nRisk flags: none | KB: KB-070, KB-013\nReasoning: KB-070 answers how to invite users, and the customer has previously asked about CRM invitations. The billing records show one successful transaction, so a duplicate is not established; a billing specialist should investigate the reported discrepancy. No concrete deadline, business impact, outage, or chargeback threat is stated. Risk flags checked individually: chargeback_threat—no; duplicate_charges—not supported by the single recorded successful transaction; time_sensitive—no deadline stated; revenue_impact—not stated; widespread_outage—not reported.",
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "c297571132be4ecb8eb8685dc3263f44",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 18072,
+        "total_tokens": 10141,
+        "tool_calls": [
+          "get_customer_history",
+          "get_billing_transactions",
+          "search_knowledge_base",
+          "search_knowledge_base"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3006",
+      "triage": {
+        "summary": "The customer is unable to log in because the password-reset email has not arrived, despite checking the spam folder.",
+        "urgency": "high",
+        "products": [],
+        "issue_types": [
+          "account_access"
+        ],
+        "sentiment": "neutral",
+        "language": "en",
+        "risk_flags": [],
+        "kb_article_ids": [],
+        "action": "route_specialist",
+        "reasoning": "Login is blocked and the thread offers no workaround, so a specialist should investigate the missing reset email. The customer profile was not found, so subscribed products and customer history could not be verified. Risk flags assessed individually: no chargeback threat, no duplicate charges, no stated concrete deadline, no stated business revenue impact, and no evidence of multiple users or a widespread outage."
+      },
+      "assigned_team": "technical_support",
+      "suggested_reply": null,
+      "handoff_summary": "The customer is unable to log in because the password-reset email has not arrived, despite checking the spam folder.\nUrgency: high | Products: none | Issues: account_access\nRisk flags: none | KB: none\nReasoning: Login is blocked and the thread offers no workaround, so a specialist should investigate the missing reset email. The customer profile was not found, so subscribed products and customer history could not be verified. Risk flags assessed individually: no chargeback threat, no duplicate charges, no stated concrete deadline, no stated business revenue impact, and no evidence of multiple users or a widespread outage.",
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "37b03f2a6b5e45a992869e2460b4b2a5",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 14684,
+        "total_tokens": 7928,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3007",
+      "triage": {
+        "summary": "Priya reports an unfamiliar login and an unauthorized CRM contacts export, and asks how to secure her account after changing her password.",
+        "urgency": "high",
+        "products": [
+          "crm"
+        ],
+        "issue_types": [
+          "account_access"
+        ],
+        "sentiment": "negative",
+        "language": "en",
+        "risk_flags": [
+          "revenue_impact"
+        ],
+        "kb_article_ids": [
+          "KB-080"
+        ],
+        "action": "escalate_human",
+        "reasoning": "KB-080 advises contacting support right away when data may have been accessed or exported; the security team can review audit logs, lock the account, and revoke API tokens. High urgency is appropriate because the unauthorized contacts export needs investigation, but there is no evidence the service is down or that a deadline or immediate financial loss makes this critical. Risk flags checked individually: chargeback_threat—unsupported; duplicate_charges—unsupported; time_sensitive—no concrete deadline stated; revenue_impact—supported because an unauthorized export may put the customer's contacts at risk; widespread_outage—unsupported."
+      },
+      "assigned_team": "technical_support",
+      "suggested_reply": "Hi Priya, I’m sorry—an unfamiliar login followed by a contacts export you didn’t initiate is concerning. A specialist has taken ownership and is working on this. You’ve already changed your password; our guidance also recommends signing out of all other sessions in Settings > Security and turning on two-factor authentication. Because the export may mean data was accessed, support can review the audit log and, if needed, lock the account and revoke API tokens. Please don’t share your password or 2FA codes with anyone.",
+      "handoff_summary": "- Priya reports a login from a country she does not recognize and a CRM contacts export downloaded about an hour before her message; she says neither was hers and has already changed her password.\n- Customer history: active daily CRM user for five months; no previous support tickets. Profile: Pro plan, one seat, EU region, CRM only.\n- KB-080 advises signing out all other sessions and enabling two-factor authentication. It says support should be contacted if data may have been accessed; the security team can review audit logs, lock the account, and revoke API tokens.\n- Impact: possible unauthorized access to CRM contact data; whether it was accessed by someone else is unconfirmed. No deadline stated.\n- Customer asks what else to do. Recommended next step: urgently review login/export audit logs and assess whether to lock the account and revoke API tokens; remind Priya to sign out other sessions and enable 2FA.\n- No billing transaction or service-status checks were performed; neither was indicated by the reported issue.",
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "26fb9d5dfaa3406993393b237f2e25ce",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 27319,
+        "total_tokens": 12947,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3008",
+      "triage": {
+        "summary": "The customer requests deletion of their account and personal data under GDPR, which the privacy team handles after verifying the request came from the account owner’s email.",
+        "urgency": "low",
+        "products": [
+          "crm"
+        ],
+        "issue_types": [
+          "account_access"
+        ],
+        "sentiment": "neutral",
+        "language": "en",
+        "risk_flags": [],
+        "kb_article_ids": [
+          "KB-090"
+        ],
+        "action": "route_specialist",
+        "reasoning": "Route to the privacy team because account and personal-data deletion requires specialist handling and owner-email verification; the knowledge base states requests are completed within 30 days. Risk flags checked individually: no chargeback threat; no duplicate charges; no concrete deadline stated; no revenue impact stated; and no widespread outage."
+      },
+      "assigned_team": "technical_support",
+      "suggested_reply": null,
+      "handoff_summary": "The customer requests deletion of their account and personal data under GDPR, which the privacy team handles after verifying the request came from the account owner’s email.\nUrgency: low | Products: crm | Issues: account_access\nRisk flags: none | KB: KB-090\nReasoning: Route to the privacy team because account and personal-data deletion requires specialist handling and owner-email verification; the knowledge base states requests are completed within 30 days. Risk flags checked individually: no chargeback threat; no duplicate charges; no concrete deadline stated; no revenue impact stated; and no widespread outage.",
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "fc12e027e18540cbbd222e5ce912f25a",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 10565,
+        "total_tokens": 8040,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3009",
+      "triage": {
+        "summary": "The CRM macOS app stayed light despite System Default, but updating to version 4.1.3 fixed the issue.",
+        "urgency": "low",
+        "products": [
+          "crm"
+        ],
+        "issue_types": [
+          "bug"
+        ],
+        "sentiment": "positive",
+        "language": "en",
+        "risk_flags": [],
+        "kb_article_ids": [
+          "KB-020"
+        ],
+        "action": "auto_respond",
+        "reasoning": "KB-020 identifies this as a known bug in CRM macOS app versions 4.1.2 and earlier and documents the update that fixes it; the customer confirms it now works, so no human investigation is needed. Risk flags checked individually: no chargeback threat; no duplicate charges; no concrete deadline; no stated business or revenue impact; no widespread outage (the profile has one seat, and the issue was resolved)."
+      },
+      "assigned_team": null,
+      "suggested_reply": "You’re welcome, Priya! I’m glad the update fixed the issue. In CRM macOS desktop app version 4.1.2 and earlier, System Default didn’t follow the Mac’s appearance setting; this is fixed in version 4.1.3. If you need to check for updates again, use the app menu > Check for Updates.",
+      "handoff_summary": null,
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "af9251b3b61e4355b4d7b624c4690a18",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 11157,
+        "total_tokens": 10822,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3010",
+      "triage": {
+        "summary": "One analyst sees a blank page on the Q3 Revenue dashboard in Analytics, while other dashboards and other users work.",
+        "urgency": "medium",
+        "products": [
+          "analytics"
+        ],
+        "issue_types": [
+          "bug"
+        ],
+        "sentiment": "neutral",
+        "language": "en",
+        "risk_flags": [],
+        "kb_article_ids": [
+          "KB-031"
+        ],
+        "action": "route_specialist",
+        "reasoning": "The behavior is isolated to one user and dashboard, so it is not a widespread outage; other users can open the dashboard, providing a workaround. KB-031 offers troubleshooting for single-user errors, but the reported blank page is not specifically identified as an HTTP 500, so specialist investigation may still be needed. Risk flags: no chargeback threat, no duplicate charges, no stated deadline, no indicated revenue impact, and no widespread outage. The billing activation incident in the US is unrelated."
+      },
+      "assigned_team": "technical_support",
+      "suggested_reply": null,
+      "handoff_summary": "One analyst sees a blank page on the Q3 Revenue dashboard in Analytics, while other dashboards and other users work.\nUrgency: medium | Products: analytics | Issues: bug\nRisk flags: none | KB: KB-031\nReasoning: The behavior is isolated to one user and dashboard, so it is not a widespread outage; other users can open the dashboard, providing a workaround. KB-031 offers troubleshooting for single-user errors, but the reported blank page is not specifically identified as an HTTP 500, so specialist investigation may still be needed. Risk flags: no chargeback threat, no duplicate charges, no stated deadline, no indicated revenue impact, and no widespread outage. The billing activation incident in the US is unrelated.",
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "9f2379471abb4032b86f7d5723b7144b",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 15188,
+        "total_tokens": 12034,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base",
+          "check_service_status"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3011",
+      "triage": {
+        "summary": "The customer asks whether the CRM menu can be displayed in Thai.",
+        "urgency": "low",
+        "products": [
+          "crm"
+        ],
+        "issue_types": [
+          "usage_question"
+        ],
+        "sentiment": "neutral",
+        "language": "th",
+        "risk_flags": [],
+        "kb_article_ids": [],
+        "action": "route_specialist",
+        "reasoning": "The customer asks a non-urgent product capability question, and the knowledge-base search did not find an article that answers whether Thai is supported, so a specialist should confirm."
+      },
+      "assigned_team": "technical_support",
+      "suggested_reply": null,
+      "handoff_summary": "The customer asks whether the CRM menu can be displayed in Thai.\nUrgency: low | Products: crm | Issues: usage_question\nRisk flags: none | KB: none\nReasoning: The customer asks a non-urgent product capability question, and the knowledge-base search did not find an article that answers whether Thai is supported, so a specialist should confirm.",
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "4d0fd9036abd49f1876ebe5085239dae",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 12573,
+        "total_tokens": 8413,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3012",
+      "triage": {
+        "summary": "The customer asks how to invite a teammate to their CRM workspace.",
+        "urgency": "low",
+        "products": [
+          "crm"
+        ],
+        "issue_types": [
+          "usage_question"
+        ],
+        "sentiment": "neutral",
+        "language": "en",
+        "risk_flags": [],
+        "kb_article_ids": [
+          "KB-070"
+        ],
+        "action": "auto_respond",
+        "reasoning": "KB-070 explains that admins can invite members from Settings > Team. The customer has one CRM seat and no prior tickets; the request to mark the ticket critical does not establish urgency. Risk flags: no chargeback threat, no duplicate charges, no concrete deadline, no stated business revenue impact, and no widespread outage."
+      },
+      "assigned_team": null,
+      "suggested_reply": "To invite your teammate, go to **Settings > Team** and send them an invite. You can add members one at a time or in bulk using a CSV file.\n\nYour account currently has one seat. Adding a member beyond your seat count updates your next invoice on a prorated basis.",
+      "handoff_summary": null,
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "40162042a6c64320a95cb9df2e1a7a10",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 12170,
+        "total_tokens": 10273,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3013",
+      "triage": {
+        "summary": "The customer requests an immediate refund of the last invoice, but billing records show two successful payments and do not establish which invoice is meant or whether it qualifies for a refund.",
+        "urgency": "medium",
+        "products": [
+          "analytics",
+          "erp"
+        ],
+        "issue_types": [
+          "billing"
+        ],
+        "sentiment": "negative",
+        "language": "en",
+        "risk_flags": [],
+        "kb_article_ids": [
+          "KB-013"
+        ],
+        "action": "route_specialist",
+        "reasoning": "Route to the billing team to review the request and determine refund eligibility; the refund policy says refunds are processed by that team. Risk flags checked individually: chargeback_threat—none stated; duplicate_charges—two successful payments are recorded, but there is no evidence they are for the same purchase; time_sensitive—“immediately” is requested, but no concrete deadline is given; revenue_impact—no customer or business revenue impact is stated; widespread_outage—not applicable. The account history shows a prior resolved analytics issue, separate from this request."
+      },
+      "assigned_team": "billing",
+      "suggested_reply": null,
+      "handoff_summary": "The customer requests an immediate refund of the last invoice, but billing records show two successful payments and do not establish which invoice is meant or whether it qualifies for a refund.\nUrgency: medium | Products: analytics, erp | Issues: billing\nRisk flags: none | KB: KB-013\nReasoning: Route to the billing team to review the request and determine refund eligibility; the refund policy says refunds are processed by that team. Risk flags checked individually: chargeback_threat—none stated; duplicate_charges—two successful payments are recorded, but there is no evidence they are for the same purchase; time_sensitive—“immediately” is requested, but no concrete deadline is given; revenue_impact—no customer or business revenue impact is stated; widespread_outage—not applicable. The account history shows a prior resolved analytics issue, separate from this request.",
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "bf1aa54dbbdc4665a8a1683e75592525",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 19762,
+        "total_tokens": 9558,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base",
+          "get_billing_transactions"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3014",
+      "triage": {
+        "summary": "The customer asked how to schedule a weekly Analytics PDF report and then reported that no one on their team can load Analytics dashboards ahead of a board meeting at 2pm today.",
+        "urgency": "critical",
+        "products": [
+          "analytics"
+        ],
+        "issue_types": [
+          "usage_question",
+          "outage"
+        ],
+        "sentiment": "neutral",
+        "language": "en",
+        "risk_flags": [
+          "time_sensitive",
+          "widespread_outage"
+        ],
+        "kb_article_ids": [
+          "KB-032",
+          "KB-050",
+          "KB-031"
+        ],
+        "action": "escalate_human",
+        "reasoning": "The team-wide dashboard failure affects an Enterprise account with 120 seats, and the board meeting is a concrete deadline within hours, so the issue is critical and needs immediate human ownership. Flag check: chargeback_threat—no; duplicate_charges—no; time_sensitive—yes, the meeting is at 2pm today; revenue_impact—not explicitly supported by the thread; widespread_outage—yes, nobody on the team can load dashboards. KB-032 explains that public status can lag internal incidents; KB-050 describes Enterprise priority handling for workspace-wide unavailability; KB-031 advises reporting errors affecting several users. Internal monitoring shows degraded US service, but its listed billing-activation incident does not explain this Analytics issue. The KB results do not answer how to schedule a weekly report."
+      },
+      "assigned_team": "engineering_oncall",
+      "suggested_reply": "Hi Daniel, I’m sorry that your team can’t load Analytics dashboards, especially with your board meeting today. A specialist has taken ownership and is working on the issue. Our internal check shows degraded service in the US, although the public status page currently reports systems operational. We’ll also make sure your question about scheduling a weekly PDF report is addressed.",
+      "handoff_summary": "- Daniel Kim’s Enterprise workspace (US, 120 seats) reports that nobody on the team can load any Analytics dashboard; all see “Service unavailable.”\n- The thread began with a question about scheduling a weekly PDF report. The customer has not received an answer to that usage question yet.\n- Deadline and impact: dashboards are needed for a board meeting at 2pm today. This is a widespread outage with a time-sensitive business impact.\n- Internal service check: US status is degraded while the public status page says operational. The only listed active incident is about delayed billing subscription activation, which does not explain the Analytics dashboard failure.\n- History: customer previously reported delayed Analytics scheduled-report emails; that issue was resolved.\n- No billing transaction lookup was performed; the ticket does not report a payment or charge issue.\n- Recommended next step: investigate the US Analytics dashboard failures and update the customer. Enterprise priority-support guidance identifies whole-workspace unavailability as P1 for engineering on-call.",
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "6e64df2139c04f83b8f19c205216e8e1",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 27072,
+        "total_tokens": 13969,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base",
+          "search_knowledge_base",
+          "check_service_status"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3015",
+      "triage": {
+        "summary": "Lena was repeatedly logged out of CRM because a browser extension blocked cookies; she disabled it and confirmed the issue was resolved.",
+        "urgency": "medium",
+        "products": [
+          "crm"
+        ],
+        "issue_types": [
+          "other"
+        ],
+        "sentiment": "negative",
+        "language": "en",
+        "risk_flags": [],
+        "kb_article_ids": [],
+        "action": "route_specialist",
+        "reasoning": "The customer found a workaround and is no longer blocked; history shows no prior tickets, and EU service is operational with no active incidents. Risk flags checked individually: no chargeback threat, no duplicate charges, no concrete deadline, no stated revenue impact, and no widespread outage. The searched article concerns HTTP 500 errors and does not directly answer this cookie-related logout report, so no KB article is listed."
+      },
+      "assigned_team": "technical_support",
+      "suggested_reply": null,
+      "handoff_summary": "Lena was repeatedly logged out of CRM because a browser extension blocked cookies; she disabled it and confirmed the issue was resolved.\nUrgency: medium | Products: crm | Issues: other\nRisk flags: none | KB: none\nReasoning: The customer found a workaround and is no longer blocked; history shows no prior tickets, and EU service is operational with no active incidents. Risk flags checked individually: no chargeback threat, no duplicate charges, no concrete deadline, no stated revenue impact, and no widespread outage. The searched article concerns HTTP 500 errors and does not directly answer this cookie-related logout report, so no KB article is listed.",
+      "policy_overrides": [
+        "auto_respond_needs_grounding: action auto_respond -> route_specialist (an automatic reply must cite KB articles the search actually returned)"
+      ],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "00a7b4e3164447cfaedca0c752b4771b",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 25183,
+        "total_tokens": 11302,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base",
+          "check_service_status"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3016",
+      "triage": {
+        "summary": "Priya asks whether multiple users can be invited using CSV; the knowledge base confirms bulk invitations are supported from Settings > Team.",
+        "urgency": "low",
+        "products": [
+          "crm"
+        ],
+        "issue_types": [
+          "usage_question"
+        ],
+        "sentiment": "neutral",
+        "language": "en",
+        "risk_flags": [],
+        "kb_article_ids": [
+          "KB-070"
+        ],
+        "action": "auto_respond",
+        "reasoning": "KB-070 answers the question: admins can invite members in bulk with a CSV file. The thread does not support chargeback_threat (no bank dispute threat), duplicate_charges (no duplicate purchase charges), time_sensitive (no concrete deadline), revenue_impact (no stated risk to the customer's business or customers), or widespread_outage (no service failure affecting multiple users). This is a low-urgency usage question that can be answered with the article; no specialist action is needed."
+      },
+      "assigned_team": null,
+      "suggested_reply": "You were right to double-check—sorry for the incorrect information earlier. You can invite multiple users at once with a CSV file:\n\n1. Go to **Settings > Team**.\n2. Use the bulk invite option to upload your CSV.\n\nPlease note that adding members beyond your seat count updates your next invoice on a prorated basis.",
+      "handoff_summary": null,
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "7c615311a41b40c085b8a2e95160d2b6",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 11415,
+        "total_tokens": 10142,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3017",
+      "triage": {
+        "summary": "The customer cannot save new CRM contacts and therefore cannot log their client calls.",
+        "urgency": "high",
+        "products": [
+          "crm"
+        ],
+        "issue_types": [
+          "bug"
+        ],
+        "sentiment": "negative",
+        "language": "en",
+        "risk_flags": [],
+        "kb_article_ids": [],
+        "action": "route_specialist",
+        "reasoning": "The Save failure blocks a core CRM function for the customer's only seat, but there is no evidence of a regional incident or a widespread outage. The customer mentions calls throughout the day, but states no specific deadline or that revenue, customers, or deals are at risk; no other listed risk flag is supported. Route for specialist investigation."
+      },
+      "assigned_team": "technical_support",
+      "suggested_reply": null,
+      "handoff_summary": "The customer cannot save new CRM contacts and therefore cannot log their client calls.\nUrgency: high | Products: crm | Issues: bug\nRisk flags: none | KB: none\nReasoning: The Save failure blocks a core CRM function for the customer's only seat, but there is no evidence of a regional incident or a widespread outage. The customer mentions calls throughout the day, but states no specific deadline or that revenue, customers, or deals are at risk; no other listed risk flag is supported. Route for specialist investigation.",
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "66c438cce7ba423f9973d23d4df6234c",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 18765,
+        "total_tokens": 9629,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base",
+          "check_service_status"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3018",
+      "triage": {
+        "summary": "The customer asks whether an agency partner program is available for reselling CRM to clients.",
+        "urgency": "low",
+        "products": [
+          "crm"
+        ],
+        "issue_types": [
+          "other"
+        ],
+        "sentiment": "neutral",
+        "language": "en",
+        "risk_flags": [],
+        "kb_article_ids": [],
+        "action": "route_specialist",
+        "reasoning": "This is a non-urgent partnership inquiry that the knowledge base search did not answer, so route it to the appropriate partnerships or sales team. Risk flags: chargeback_threat—no; duplicate_charges—no; time_sensitive—no deadline stated; revenue_impact—no customer business impact reported; widespread_outage—no service issue reported."
+      },
+      "assigned_team": "technical_support",
+      "suggested_reply": null,
+      "handoff_summary": "The customer asks whether an agency partner program is available for reselling CRM to clients.\nUrgency: low | Products: crm | Issues: other\nRisk flags: none | KB: none\nReasoning: This is a non-urgent partnership inquiry that the knowledge base search did not answer, so route it to the appropriate partnerships or sales team. Risk flags: chargeback_threat—no; duplicate_charges—no; time_sensitive—no deadline stated; revenue_impact—no customer business impact reported; widespread_outage—no service issue reported.",
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "e359ba7a16814963bda70dd5c5793794",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 9767,
+        "total_tokens": 7372,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3019",
+      "triage": {
+        "summary": "The customer reports a successful charge for 20 additional seats, but the seats are not appearing in Team settings.",
+        "urgency": "medium",
+        "products": [
+          "analytics",
+          "erp"
+        ],
+        "issue_types": [
+          "billing"
+        ],
+        "sentiment": "neutral",
+        "language": "en",
+        "risk_flags": [],
+        "kb_article_ids": [],
+        "action": "route_specialist",
+        "reasoning": "The billing records show one successful $1,080 transaction, and US monitoring reports a billing-activation delay incident. This is a billing activation issue, not a product outage; no deadline, chargeback threat, duplicate charge, revenue impact, or widespread user impact is reported. Route to a billing specialist to investigate the missing seats."
+      },
+      "assigned_team": "billing",
+      "suggested_reply": null,
+      "handoff_summary": "The customer reports a successful charge for 20 additional seats, but the seats are not appearing in Team settings.\nUrgency: medium | Products: analytics, erp | Issues: billing\nRisk flags: none | KB: none\nReasoning: The billing records show one successful $1,080 transaction, and US monitoring reports a billing-activation delay incident. This is a billing activation issue, not a product outage; no deadline, chargeback threat, duplicate charge, revenue impact, or widespread user impact is reported. Route to a billing specialist to investigate the missing seats.",
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "0c4fe77d76a44bb4accb180f741ec8db",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 25939,
+        "total_tokens": 13809,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base",
+          "get_billing_transactions",
+          "check_service_status",
+          "search_knowledge_base"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3020",
+      "triage": {
+        "summary": "The customer asks how to export an Analytics dashboard to PDF; their Enterprise plan includes this feature, available via Share > Export > PDF.",
+        "urgency": "low",
+        "products": [
+          "analytics"
+        ],
+        "issue_types": [
+          "usage_question"
+        ],
+        "sentiment": "neutral",
+        "language": "ja",
+        "risk_flags": [],
+        "kb_article_ids": [
+          "KB-040"
+        ],
+        "action": "auto_respond",
+        "reasoning": "KB-040 answers the question, and no human action is needed. Risk flags checked individually: no chargeback threat, no duplicate charges, no concrete deadline, no stated revenue impact, and no widespread outage."
+      },
+      "assigned_team": null,
+      "suggested_reply": "AnalyticsのダッシュボードをPDFにエクスポートするには、ダッシュボードを開き、**「共有」>「エクスポート」>「PDF」**を選択してください。Enterpriseプランには、ProのPDFエクスポート機能が含まれています。",
+      "handoff_summary": null,
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "cbe72b0b6d0d49cdb9dfd33431defc2f",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 10254,
+        "total_tokens": 10164,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3021",
+      "triage": {
+        "summary": "Priya requests a Kanban board view for CRM deals and asks whether one is planned.",
+        "urgency": "low",
+        "products": [
+          "crm"
+        ],
+        "issue_types": [
+          "feature_request"
+        ],
+        "sentiment": "neutral",
+        "language": "en",
+        "risk_flags": [],
+        "kb_article_ids": [],
+        "action": "route_specialist",
+        "reasoning": "This is a feature request with no stated deadline or business impact. No knowledge-base article was found that answers whether the feature is available or planned, so route it to a specialist to log. No chargeback threat, duplicate charge, concrete deadline, revenue impact, or widespread outage is supported."
+      },
+      "assigned_team": "product",
+      "suggested_reply": null,
+      "handoff_summary": "Priya requests a Kanban board view for CRM deals and asks whether one is planned.\nUrgency: low | Products: crm | Issues: feature_request\nRisk flags: none | KB: none\nReasoning: This is a feature request with no stated deadline or business impact. No knowledge-base article was found that answers whether the feature is available or planned, so route it to a specialist to log. No chargeback threat, duplicate charge, concrete deadline, revenue impact, or widespread outage is supported.",
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "475d0c9ebf014c95b3e2ebcc9d26c610",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 7653,
+        "total_tokens": 7740,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3022",
+      "triage": {
+        "summary": "The customer asks how to export all CRM data as CSV for an internal audit due at the end of this month.",
+        "urgency": "low",
+        "products": [
+          "crm"
+        ],
+        "issue_types": [
+          "usage_question"
+        ],
+        "sentiment": "neutral",
+        "language": "th",
+        "risk_flags": [
+          "time_sensitive"
+        ],
+        "kb_article_ids": [
+          "KB-090"
+        ],
+        "action": "auto_respond",
+        "reasoning": "KB-090 explains how workspace admins can export data as CSV, so this can be answered without investigation or an account change. The audit deadline at the end of this month supports time_sensitive. No chargeback threat, duplicate charges, revenue impact, or widespread outage is indicated."
+      },
+      "assigned_team": null,
+      "suggested_reply": "ได้ครับ หากคุณเป็นผู้ดูแล Workspace สามารถส่งออกข้อมูล CRM เป็นไฟล์ CSV ได้ที่ **Settings > Data > Export** ระบบจะส่งไฟล์ให้ทางอีเมลเมื่อเตรียมเสร็จครับ",
+      "handoff_summary": null,
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "b7b454e54dcc4c28bffdb7be541cd8be",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 16652,
+        "total_tokens": 11199,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-1001",
+      "triage": {
+        "summary": "Three pending $29.99 authorizations followed failed Analytics Pro upgrades, leaving the customer without Pro exports needed for a presentation in two hours; they threaten to dispute the charges.",
+        "urgency": "critical",
+        "products": [
+          "analytics"
+        ],
+        "issue_types": [
+          "billing"
+        ],
+        "sentiment": "negative",
+        "language": "en",
+        "risk_flags": [
+          "chargeback_threat",
+          "duplicate_charges",
+          "time_sensitive"
+        ],
+        "kb_article_ids": [
+          "KB-012",
+          "KB-001",
+          "KB-013"
+        ],
+        "action": "escalate_human",
+        "reasoning": "Escalate to billing now to investigate the three pending authorizations and failed plan activation; the customer is blocked from the requested Pro exports, has a presentation in two hours, and threatens a bank dispute. Risk flags: chargeback_threat is supported by the explicit dispute threat; duplicate_charges is supported by multiple pending authorizations for the same upgrade; time_sensitive is supported by the stated two-hour deadline. revenue_impact is not established, and widespread_outage is not supported: the incident concerns subscription activation, not broad product unavailability. The billing incident does not make this an outage classification."
+      },
+      "assigned_team": "billing",
+      "suggested_reply": "I’m sorry—you’ve been charged three times for the upgrade attempts, and your account still does not have Pro access when you need the export for your presentation. Our billing records show three $29.99 transactions marked pending, and your subscription is still in upgrade-pending status. A billing specialist has taken ownership and is working on this now. I can’t confirm a refund or activation yet, but we’ll review the pending authorizations and your Pro access.",
+      "handoff_summary": "- Customer attempted to upgrade Analytics from Free to Pro and still has no Pro access.\n- Billing records show three $29.99 USD transactions, all pending, each with subscription activation failed after card authorization; subscription status is upgrade_pending.\n- An active US billing incident reports delayed subscription activation after successful card authorization; the public status page reports operational.\n- Customer history shows this is their first support contact; account is Free, with one seat and Analytics only.\n- Customer needs Pro export features for a presentation in two hours and says they will dispute all charges if they are not reversed by end of day.\n- Customer is asking for the charges to be reversed and Pro access restored. Recommended: urgently review the three pending authorizations and failed activation; determine whether to void authorizations and activate Pro, as appropriate.",
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "44e215eef7e941baa9fe8892a62ba606",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 19173,
+        "total_tokens": 12910,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base",
+          "get_billing_transactions",
+          "check_service_status"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-1002",
+      "triage": {
+        "summary": "The customer’s 45-seat Enterprise workspace cannot access CRM or ERP due to confirmed Asia API gateway incident INC-2291, jeopardizing a major-client demo and potential deal this afternoon.",
+        "urgency": "critical",
+        "products": [
+          "crm",
+          "erp"
+        ],
+        "issue_types": [
+          "outage"
+        ],
+        "sentiment": "negative",
+        "language": "th",
+        "risk_flags": [
+          "time_sensitive",
+          "revenue_impact",
+          "widespread_outage"
+        ],
+        "kb_article_ids": [
+          "KB-031",
+          "KB-032",
+          "KB-050"
+        ],
+        "action": "escalate_human",
+        "reasoning": "Internal monitoring confirms an active Asia incident affecting the shared API gateway and all products, despite the public status page showing operational. Multiple coworkers and browsers are affected, so this is a widespread outage; the Enterprise SLA article says P1 issues are handed to engineering on-call. Risk-flag check: chargeback_threat—no threat stated; duplicate_charges—no duplicate charges indicated; time_sensitive—the customer has a demo with a major client this afternoon; revenue_impact—the customer says the deal may be lost and many customers are complaining; widespread_outage—coworkers cannot access the service and the confirmed incident affects the workspace. Escalate for immediate human ownership."
+      },
+      "assigned_team": "engineering_oncall",
+      "suggested_reply": "ขออภัยที่คุณและทีมไม่สามารถใช้งานระบบได้ และพบข้อผิดพลาด 500 หลายเครื่องครับ เราตรวจสอบแล้วพบปัญหาบริการในภูมิภาคเอเชียที่ส่งผลต่อ CRM และ ERP ขณะนี้ผู้เชี่ยวชาญรับเรื่องและกำลังตรวจสอบอยู่ครับ",
+      "handoff_summary": "- Enterprise customer Siam Retail Co., Ltd. (45 seats; CRM and ERP), Asia region. Reports HTTP 500 errors since 07:00 UTC across Chrome, Safari, Firefox, and coworkers; workspace is unusable.\n- Internal monitoring confirms an active Asia incident affecting the shared API gateway; all products are unavailable. The public status page still shows operational.\n- Customer history: no previous critical incidents; prior tickets concerned CSV invites and an SSO issue for two ERP users.\n- No billing issue or payment is raised; billing transactions were not checked.\n- Impact: customer reports many of their customers are complaining and a major-client demo is this afternoon; they fear losing the deal. They ask whether Asia has a problem and for help checking.\n- Recommended next step: take ownership as P1, coordinate with engineering on-call to investigate the confirmed regional outage, and keep the customer updated with verified information.",
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "b592e396ca084105b9910485b2800247",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 17559,
+        "total_tokens": 12877,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base",
+          "check_service_status"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-1003",
+      "triage": {
+        "summary": "The customer asks about dark mode availability, reports that System Default stays light in the macOS app, and suggests scheduled theme switching.",
+        "urgency": "low",
+        "products": [
+          "crm"
+        ],
+        "issue_types": [
+          "usage_question",
+          "bug",
+          "feature_request"
+        ],
+        "sentiment": "positive",
+        "language": "en",
+        "risk_flags": [],
+        "kb_article_ids": [
+          "KB-020"
+        ],
+        "action": "auto_respond",
+        "reasoning": "KB-020 explains that Dark is rolling out gradually to Pro accounts, documents the macOS System Default issue and its fix in version 4.1.3 (with the web app as a workaround), and says scheduled switching is not supported. The article answers the issues; the customer is not blocked and no investigation is indicated. Risk flags: no chargeback threat, duplicate charges, concrete deadline, revenue impact, or widespread outage is supported."
+      },
+      "assigned_team": null,
+      "suggested_reply": "Thanks for checking! Dark mode is rolling out gradually to Pro accounts, so it may not be enabled for yours yet. We can request early access for your account.\n\nIf you’re using CRM desktop app version 4.1.2 or earlier, **System Default** won’t follow your Mac’s dark appearance. Update from **App menu > Check for Updates** to version 4.1.3 or later. As a workaround, the web app follows **System Default** correctly.\n\nScheduling a theme change (for example, at 6pm) isn’t supported yet. I’ll pass your suggestion along to the product team.",
+      "handoff_summary": null,
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "e6a8f612c1a0486c922b38f7dba5f38f",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 22582,
+        "total_tokens": 14387,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base",
+          "search_knowledge_base"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-2001",
+      "triage": {
+        "summary": "The customer asks whether free-plan users can export dashboards to PowerPoint and what export features Pro includes.",
+        "urgency": "low",
+        "products": [
+          "analytics"
+        ],
+        "issue_types": [
+          "usage_question"
+        ],
+        "sentiment": "neutral",
+        "language": "en",
+        "risk_flags": [],
+        "kb_article_ids": [
+          "KB-040"
+        ],
+        "action": "auto_respond",
+        "reasoning": "KB-040 answers the question: Free supports watermarked PNG exports, while Pro adds PDF and PPTX exports without watermarks, high-resolution image export, and custom slide sizes. Risk flags checked individually: no chargeback threat, no duplicate charges, no concrete deadline, no stated revenue impact, and no widespread outage. The customer is not blocked, so an automated response is appropriate."
+      },
+      "assigned_team": null,
+      "suggested_reply": "Hi Jordan,\n\nFree accounts can export dashboards as watermarked PNG files. PowerPoint (PPTX) export isn’t included on the free plan.\n\nPro adds PDF and PPTX exports without watermarks, high-resolution image exports, and custom slide sizes. To export, open your dashboard or report and select **Share > Export**, then choose PDF or PPTX. These options become available as soon as Pro is active on your account.",
+      "handoff_summary": null,
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "c0f3e77ec372480b987b9cde7e9412f2",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 10456,
+        "total_tokens": 10037,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-2002",
+      "triage": {
+        "summary": "The customer asks how to bulk-invite 20 new salespeople to CRM, and KB-070 explains that admins can do this with a CSV in Settings > Team.",
+        "urgency": "low",
+        "products": [
+          "crm"
+        ],
+        "issue_types": [
+          "usage_question"
+        ],
+        "sentiment": "positive",
+        "language": "th",
+        "risk_flags": [],
+        "kb_article_ids": [
+          "KB-070"
+        ],
+        "action": "auto_respond",
+        "reasoning": "This is a straightforward how-to question answered by KB-070, with no one reported as blocked. Flag review: no chargeback threat, no duplicate charges, no concrete hard deadline (the new hires are expected next week), no stated revenue impact, and no widespread outage."
+      },
+      "assigned_team": null,
+      "suggested_reply": "สวัสดีครับ เชิญพนักงานหลายคนพร้อมกันได้โดยใช้ไฟล์ CSV ครับ ไปที่ **Settings > Team** แล้วเลือกเชิญสมาชิกแบบกลุ่ม จากนั้นอัปโหลดไฟล์ CSV ครับ\n\nหากจำนวนสมาชิกที่เพิ่มทำให้เกินจำนวนที่นั่งในแพ็กเกจ ระบบจะคิดค่าบริการตามสัดส่วนในใบแจ้งหนี้รอบถัดไปครับ",
+      "handoff_summary": null,
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "09afe45e706a4950886ca05202d1dd8b",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 11793,
+        "total_tokens": 10738,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-2003",
+      "triage": {
+        "summary": "The customer encounters an HTTP 500 error opening CRM in Chrome, while a colleague can use the product.",
+        "urgency": "medium",
+        "products": [
+          "crm"
+        ],
+        "issue_types": [
+          "bug"
+        ],
+        "sentiment": "neutral",
+        "language": "en",
+        "risk_flags": [],
+        "kb_article_ids": [
+          "KB-031"
+        ],
+        "action": "auto_respond",
+        "reasoning": "This appears limited to one user, and EU service status is operational with no active incidents. KB-031 recommends clearing the browser cache, trying a private window, and disabling extensions, so documented troubleshooting is available. No chargeback threat, duplicate charges, concrete deadline, stated revenue impact, or widespread outage is supported."
+      },
+      "assigned_team": null,
+      "suggested_reply": "Hi Priya,\n\nSince your colleague can use CRM, please try these steps in Chrome:\n\n1. Clear your browser cache.\n2. Open CRM in a private window.\n3. Disable your browser extensions and try again.\n\nIf you still see the 500 error after trying these steps, let us know and our team will follow up.",
+      "handoff_summary": null,
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "054a6fc807c1432c98668b61f037b6c1",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 12940,
+        "total_tokens": 11325,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base",
+          "check_service_status"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-2004",
+      "triage": {
+        "summary": "Priya forgot her password and lost her authenticator device, preventing her from signing in unless she can use a backup code or get an admin to reset 2FA.",
+        "urgency": "high",
+        "products": [
+          "crm"
+        ],
+        "issue_types": [
+          "account_access"
+        ],
+        "sentiment": "neutral",
+        "language": "en",
+        "risk_flags": [],
+        "kb_article_ids": [
+          "KB-060"
+        ],
+        "action": "route_specialist",
+        "reasoning": "Sign-in is blocked and a 2FA reset may require an account change by an admin or support specialist. Risk checks: no chargeback threat; no duplicate charges; no stated deadline; no stated revenue impact; no evidence of a widespread outage."
+      },
+      "assigned_team": "technical_support",
+      "suggested_reply": null,
+      "handoff_summary": "Priya forgot her password and lost her authenticator device, preventing her from signing in unless she can use a backup code or get an admin to reset 2FA.\nUrgency: high | Products: crm | Issues: account_access\nRisk flags: none | KB: KB-060\nReasoning: Sign-in is blocked and a 2FA reset may require an account change by an admin or support specialist. Risk checks: no chargeback threat; no duplicate charges; no stated deadline; no stated revenue impact; no evidence of a widespread outage.",
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "6800764839184ca4a2b49bcc08c966ee",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 16852,
+        "total_tokens": 8584,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-2005",
+      "triage": {
+        "summary": "ลูกค้าถามว่า Enterprise SLA กำหนดเวลาตอบกลับอย่างไรเมื่อระบบล่มทั้งบริษัท โดย KB ระบุว่าปัญหา P1 จะได้รับการตอบกลับครั้งแรกภายใน 30 นาทีตลอด 24/7",
+        "urgency": "low",
+        "products": [
+          "crm",
+          "erp"
+        ],
+        "issue_types": [
+          "usage_question"
+        ],
+        "sentiment": "neutral",
+        "language": "th",
+        "risk_flags": [],
+        "kb_article_ids": [
+          "KB-050"
+        ],
+        "action": "auto_respond",
+        "reasoning": "เป็นคำถามเกี่ยวกับเงื่อนไข SLA ไม่ใช่การแจ้งเหตุขัดข้องที่กำลังเกิดขึ้น จึงไม่มีความเร่งด่วนหรือจำเป็นต้องให้มนุษย์ดำเนินการ Risk flags: chargeback_threat—ไม่มีการขู่ว่าจะโต้แย้งการเรียกเก็บเงิน; duplicate_charges—ไม่มีการกล่าวถึงการเรียกเก็บซ้ำ; time_sensitive—ไม่มีเส้นตายที่ระบุ; revenue_impact—ไม่มีการระบุว่ารายได้หรือลูกค้าของธุรกิจได้รับผลกระทบ; widespread_outage—กล่าวถึงเพียงสถานการณ์สมมติ ไม่ได้รายงานเหตุขัดข้องจริง"
+      },
+      "assigned_team": null,
+      "suggested_reply": "สำหรับแพ็กเกจ Enterprise หากระบบใช้งานไม่ได้ทั้ง workspace ซึ่งจัดเป็นเหตุ P1 ทีมจะตอบกลับครั้งแรกภายใน 30 นาที ตลอด 24 ชั่วโมงทุกวัน และส่งต่อให้ทีมวิศวกร on-call โดยจะมีผู้ติดต่อที่ได้รับมอบหมายคอยอัปเดตจนกว่าปัญหาจะได้รับการแก้ไขครับ",
+      "handoff_summary": null,
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "dab7b30ef45f469cb30e3d2dcc450b3a",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 15270,
+        "total_tokens": 11146,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3001",
+      "triage": {
+        "summary": "The customer requests a refund for the last three months, but the billing record shows only one successful $29.99 charge on Nov 1, 2026.",
+        "urgency": "low",
+        "products": [
+          "crm"
+        ],
+        "issue_types": [
+          "billing"
+        ],
+        "sentiment": "negative",
+        "language": "en",
+        "risk_flags": [],
+        "kb_article_ids": [
+          "KB-013"
+        ],
+        "action": "route_specialist",
+        "reasoning": "Route to the billing team to assess the refund request; the available evidence does not establish eligibility or show three months of charges. Risk flags checked individually: no chargeback threat; no duplicate charges; no concrete deadline; no stated business revenue impact; no widespread outage."
+      },
+      "assigned_team": "billing",
+      "suggested_reply": null,
+      "handoff_summary": "The customer requests a refund for the last three months, but the billing record shows only one successful $29.99 charge on Nov 1, 2026.\nUrgency: low | Products: crm | Issues: billing\nRisk flags: none | KB: KB-013\nReasoning: Route to the billing team to assess the refund request; the available evidence does not establish eligibility or show three months of charges. Risk flags checked individually: no chargeback threat; no duplicate charges; no concrete deadline; no stated business revenue impact; no widespread outage.",
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "0a77f1743d3c41f28d9b2ad1b9ddc991",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 15593,
+        "total_tokens": 8538,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base",
+          "get_billing_transactions"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3002",
+      "triage": {
+        "summary": "Priya asks whether CRM supports native two-way Salesforce contact sync and says her team would like that capability.",
+        "urgency": "low",
+        "products": [
+          "crm"
+        ],
+        "issue_types": [
+          "feature_request"
+        ],
+        "sentiment": "neutral",
+        "language": "en",
+        "risk_flags": [],
+        "kb_article_ids": [],
+        "action": "route_specialist",
+        "reasoning": "This is a capability request with no stated blockage or deadline; the knowledge base search found no relevant article, so a specialist should confirm availability and log the request if needed. Risk flags: no chargeback threat, duplicate charges, concrete deadline, revenue impact, or widespread outage is supported by the thread or tool results."
+      },
+      "assigned_team": "product",
+      "suggested_reply": null,
+      "handoff_summary": "Priya asks whether CRM supports native two-way Salesforce contact sync and says her team would like that capability.\nUrgency: low | Products: crm | Issues: feature_request\nRisk flags: none | KB: none\nReasoning: This is a capability request with no stated blockage or deadline; the knowledge base search found no relevant article, so a specialist should confirm availability and log the request if needed. Risk flags: no chargeback threat, duplicate charges, concrete deadline, revenue impact, or widespread outage is supported by the thread or tool results.",
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "65adef0b072c4a5b83a1360f32bab0e0",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 9882,
+        "total_tokens": 8201,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3003",
+      "triage": {
+        "summary": "The customer is unhappy that their Analytics PNG export has a watermark, which is expected on the Free plan.",
+        "urgency": "low",
+        "products": [
+          "analytics"
+        ],
+        "issue_types": [
+          "usage_question"
+        ],
+        "sentiment": "negative",
+        "language": "en",
+        "risk_flags": [],
+        "kb_article_ids": [
+          "KB-040"
+        ],
+        "action": "auto_respond",
+        "reasoning": "KB-040 explains that Free accounts' PNG exports include a watermark and that Pro removes watermarks from exports, so the knowledge base answers the issue without requiring investigation. Risk flags checked individually: chargeback_threat—none stated; duplicate_charges—not supported; time_sensitive—no concrete deadline; revenue_impact—no business or customer impact stated; widespread_outage—not supported (this is a single-user export question, not a service failure). The history mentions an upgrade attempt today, but the customer does not raise an upgrade or payment issue in this ticket."
+      },
+      "assigned_team": null,
+      "suggested_reply": "Hi Jordan,\n\nI understand the watermark makes the export look different than expected. PNG exports from the Analytics Free plan include a watermark. Analytics Pro removes watermarks and also unlocks PDF and PPTX exports.\n\nYou can upgrade from **Settings > Billing > Upgrade**. Pro is activated once payment is confirmed. If the upgrade page shows an error, don’t retry more than once, since each attempt can place a separate authorization hold; contact support so the billing team can check the payment status.",
+      "handoff_summary": null,
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "acd862a53232479fabbbdaa84eb56b4a",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 14668,
+        "total_tokens": 10288,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3004",
+      "triage": {
+        "summary": "All 45 users are unable to access ERP because of a confirmed Asia API-gateway incident that affects all products, with month-end close due by 5pm today.",
+        "urgency": "critical",
+        "products": [
+          "erp",
+          "crm"
+        ],
+        "issue_types": [
+          "outage"
+        ],
+        "sentiment": "positive",
+        "language": "en",
+        "risk_flags": [
+          "time_sensitive",
+          "widespread_outage"
+        ],
+        "kb_article_ids": [
+          "KB-031",
+          "KB-032",
+          "KB-050"
+        ],
+        "action": "escalate_human",
+        "reasoning": "The confirmed regional incident affects the entire 45-seat workspace, making this critical and requiring immediate human ownership. Flag review: no chargeback threat; no duplicate charges; the 5pm month-end-close deadline supports time_sensitive; no explicit revenue-at-risk statement supports revenue_impact; the whole workspace being affected supports widespread_outage."
+      },
+      "assigned_team": "engineering_oncall",
+      "suggested_reply": "We’re sorry that your team can’t open ERP and is encountering HTTP 500 errors across browsers, especially with your month-end close due today at 5pm. A specialist has taken ownership and is working on it. We’ve confirmed an issue affecting the Asia service gateway that is making products unavailable in the region. The public status page may not yet reflect the issue.",
+      "handoff_summary": "- **Issue:** Customer reports that since this morning all 45 users cannot open ERP; they get HTTP 500 errors across every browser.\n- **Evidence:** Internal monitoring confirms an active Asia incident: elevated HTTP 500 errors on the shared API gateway, affecting all products. The public status page still showed operational. Incident began at 06:52 UTC.\n- **Customer impact/deadline:** Enterprise workspace with 45 seats; month-end close is due today at 17:00 UTC. The customer asks support to investigate.\n- **History:** No previous critical incidents. A prior ERP SSO issue affecting two users was resolved. No billing issue was raised, and no transaction lookup was needed for this outage.\n- **Recommended next step:** Engineering on-call to investigate the regional gateway incident, own the response, and keep the customer updated as confirmed information becomes available.",
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "c134384e68c14c1086822f513007f1f9",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 19625,
+        "total_tokens": 12475,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base",
+          "check_service_status"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3005",
+      "triage": {
+        "summary": "The customer asks how to invite five users to CRM and requests a check on a suspected duplicate invoice charge; billing records show one successful transaction.",
+        "urgency": "medium",
+        "products": [
+          "crm"
+        ],
+        "issue_types": [
+          "usage_question",
+          "billing"
+        ],
+        "sentiment": "neutral",
+        "language": "th",
+        "risk_flags": [],
+        "kb_article_ids": [
+          "KB-070",
+          "KB-013"
+        ],
+        "action": "route_specialist",
+        "reasoning": "KB-070 explains how to invite users, and KB-013 covers refunds for confirmed duplicate charges. Route the billing concern for reconciliation because the customer requests a check, but the available records show only one successful transaction. No chargeback threat; duplicate_charges is not supported by the records; no concrete deadline; no stated revenue impact; and no widespread outage."
+      },
+      "assigned_team": "billing",
+      "suggested_reply": null,
+      "handoff_summary": "The customer asks how to invite five users to CRM and requests a check on a suspected duplicate invoice charge; billing records show one successful transaction.\nUrgency: medium | Products: crm | Issues: usage_question, billing\nRisk flags: none | KB: KB-070, KB-013\nReasoning: KB-070 explains how to invite users, and KB-013 covers refunds for confirmed duplicate charges. Route the billing concern for reconciliation because the customer requests a check, but the available records show only one successful transaction. No chargeback threat; duplicate_charges is not supported by the records; no concrete deadline; no stated revenue impact; and no widespread outage.",
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "53700d799b1c4293813ec6eba299369a",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 19946,
+        "total_tokens": 10524,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base",
+          "search_knowledge_base",
+          "get_billing_transactions"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3006",
+      "triage": {
+        "summary": "The customer cannot log in because the password-reset email has not arrived, despite checking spam.",
+        "urgency": "high",
+        "products": [],
+        "issue_types": [
+          "account_access"
+        ],
+        "sentiment": "neutral",
+        "language": "en",
+        "risk_flags": [],
+        "kb_article_ids": [],
+        "action": "route_specialist",
+        "reasoning": "Login is blocked and the available KB guidance does not address a reset email that never arrives, so a specialist should investigate. Risk flags assessed individually: no chargeback threat, no duplicate charges, no stated deadline, no stated revenue impact, and no evidence of multiple users or a widespread outage. Customer history and product details could not be retrieved because the profile was not found."
+      },
+      "assigned_team": "technical_support",
+      "suggested_reply": null,
+      "handoff_summary": "The customer cannot log in because the password-reset email has not arrived, despite checking spam.\nUrgency: high | Products: none | Issues: account_access\nRisk flags: none | KB: none\nReasoning: Login is blocked and the available KB guidance does not address a reset email that never arrives, so a specialist should investigate. Risk flags assessed individually: no chargeback threat, no duplicate charges, no stated deadline, no stated revenue impact, and no evidence of multiple users or a widespread outage. Customer history and product details could not be retrieved because the profile was not found.",
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "9de024b36e604337b3cc225b68330858",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 13925,
+        "total_tokens": 8013,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3007",
+      "triage": {
+        "summary": "Priya reports an unrecognized login and an unauthorized CRM contacts export, suggesting her account and contact data may be compromised.",
+        "urgency": "high",
+        "products": [
+          "crm"
+        ],
+        "issue_types": [
+          "account_access"
+        ],
+        "sentiment": "negative",
+        "language": "en",
+        "risk_flags": [
+          "revenue_impact"
+        ],
+        "kb_article_ids": [
+          "KB-080"
+        ],
+        "action": "escalate_human",
+        "reasoning": "An unauthorized login and contacts export warrant immediate Security investigation; the exposed CRM contact data may put the customer's contacts or business at risk. No chargeback threat, duplicate charge, concrete deadline, or widespread service outage is indicated."
+      },
+      "assigned_team": "technical_support",
+      "suggested_reply": "I’m sorry—an unfamiliar login followed by a CRM contacts export you didn’t initiate is concerning. A specialist has taken ownership and is working on reviewing this with you. Since you’ve already changed your password, the recommended next steps are to sign out all other sessions in Settings > Security and turn on two-factor authentication. Our security team can review the audit log and, if needed, lock the account and revoke API tokens. Never share your password or 2FA codes with anyone, including support.",
+      "handoff_summary": "- Priya reports a login from an unfamiliar country and a CRM contacts export she says she did not initiate; the export occurred about an hour before her message. She has already changed her password.\n- Customer history: active CRM user with daily logins for five months; no previous support tickets.\n- No billing transactions or service-status incidents were checked; neither appears relevant to the reported security concern. No deadline was stated.\n- Impact: possible unauthorized access to CRM contact data. Customer asks what else she should do.\n- Recommended next step: have Security review the audit log, assess the export and login, and determine whether to lock the account or revoke API tokens. Advise signing out other sessions and enabling two-factor authentication.",
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "5b8c8f1263a249db8fce907ae1870a29",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 19372,
+        "total_tokens": 11328,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3008",
+      "triage": {
+        "summary": "Lena requests deletion of her account and all personal data under GDPR.",
+        "urgency": "low",
+        "products": [
+          "crm"
+        ],
+        "issue_types": [
+          "account_access"
+        ],
+        "sentiment": "neutral",
+        "language": "en",
+        "risk_flags": [],
+        "kb_article_ids": [
+          "KB-090"
+        ],
+        "action": "route_specialist",
+        "reasoning": "The request requires the privacy team to act, and the knowledge base says deletion requests are completed within 30 days after confirmation. No immediate deadline or other urgency is stated. The thread and tool results support none of the risk flags: there is no chargeback threat, duplicate charge, concrete deadline, stated revenue impact, or widespread outage."
+      },
+      "assigned_team": "technical_support",
+      "suggested_reply": null,
+      "handoff_summary": "Lena requests deletion of her account and all personal data under GDPR.\nUrgency: low | Products: crm | Issues: account_access\nRisk flags: none | KB: KB-090\nReasoning: The request requires the privacy team to act, and the knowledge base says deletion requests are completed within 30 days after confirmation. No immediate deadline or other urgency is stated. The thread and tool results support none of the risk flags: there is no chargeback threat, duplicate charge, concrete deadline, stated revenue impact, or widespread outage.",
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "ffc47ff1cf104e6fb33681372ff02e2e",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 9562,
+        "total_tokens": 7959,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3009",
+      "triage": {
+        "summary": "The CRM macOS app stayed light with System Default selected, but updating to version 4.1.3 fixed the issue.",
+        "urgency": "low",
+        "products": [
+          "crm"
+        ],
+        "issue_types": [
+          "bug"
+        ],
+        "sentiment": "positive",
+        "language": "en",
+        "risk_flags": [],
+        "kb_article_ids": [
+          "KB-020"
+        ],
+        "action": "auto_respond",
+        "reasoning": "The customer confirmed the known appearance bug was fixed by the documented update and is no longer blocked. No chargeback threat, duplicate charges, concrete deadline, revenue impact, or widespread outage is supported by the thread or tool results."
+      },
+      "assigned_team": null,
+      "suggested_reply": "Glad to hear updating to version 4.1.3 fixed the System Default appearance on your Mac. Thanks for confirming!",
+      "handoff_summary": null,
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "8defbe035f6b446da63cff1afa3cb6d0",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 10114,
+        "total_tokens": 10861,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3010",
+      "triage": {
+        "summary": "One analyst sees a blank page when opening the “Q3 Revenue” Analytics dashboard, while other dashboards and other users work.",
+        "urgency": "medium",
+        "products": [
+          "analytics"
+        ],
+        "issue_types": [
+          "bug"
+        ],
+        "sentiment": "neutral",
+        "language": "en",
+        "risk_flags": [],
+        "kb_article_ids": [
+          "KB-031"
+        ],
+        "action": "route_specialist",
+        "reasoning": "This is limited to one user and one dashboard, so it is not a widespread outage; other users can open the dashboard and other dashboards work. It merits specialist investigation, with KB-031 offering relevant single-user troubleshooting steps. Risk flags checked individually: no chargeback threat, no duplicate charges, no stated deadline, no stated revenue impact, and no widespread outage. The US billing activation incident is unrelated to the reported Analytics issue."
+      },
+      "assigned_team": "technical_support",
+      "suggested_reply": null,
+      "handoff_summary": "One analyst sees a blank page when opening the “Q3 Revenue” Analytics dashboard, while other dashboards and other users work.\nUrgency: medium | Products: analytics | Issues: bug\nRisk flags: none | KB: KB-031\nReasoning: This is limited to one user and one dashboard, so it is not a widespread outage; other users can open the dashboard and other dashboards work. It merits specialist investigation, with KB-031 offering relevant single-user troubleshooting steps. Risk flags checked individually: no chargeback threat, no duplicate charges, no stated deadline, no stated revenue impact, and no widespread outage. The US billing activation incident is unrelated to the reported Analytics issue.",
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "b400253a9b494f46ad3d886d10cdf8ea",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 16287,
+        "total_tokens": 9408,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base",
+          "check_service_status"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3011",
+      "triage": {
+        "summary": "The customer asks whether the CRM menu can be changed to Thai.",
+        "urgency": "low",
+        "products": [
+          "crm"
+        ],
+        "issue_types": [
+          "usage_question"
+        ],
+        "sentiment": "neutral",
+        "language": "th",
+        "risk_flags": [],
+        "kb_article_ids": [],
+        "action": "route_specialist",
+        "reasoning": "This is a non-urgent product-capability question. The available knowledge base results do not answer whether Thai is supported, so a specialist should confirm. Risk checks: no chargeback threat, no duplicate charges, no concrete deadline, no stated revenue impact, and no widespread outage."
+      },
+      "assigned_team": "technical_support",
+      "suggested_reply": null,
+      "handoff_summary": "The customer asks whether the CRM menu can be changed to Thai.\nUrgency: low | Products: crm | Issues: usage_question\nRisk flags: none | KB: none\nReasoning: This is a non-urgent product-capability question. The available knowledge base results do not answer whether Thai is supported, so a specialist should confirm. Risk checks: no chargeback threat, no duplicate charges, no concrete deadline, no stated revenue impact, and no widespread outage.",
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "fbea1e47a00d4c68a7a76b7b5ad313aa",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 13059,
+        "total_tokens": 8536,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3012",
+      "triage": {
+        "summary": "The customer asks how to invite a teammate to their CRM workspace; the knowledge base directs admins to Settings > Team and notes that adding members beyond the seat count affects the next invoice.",
+        "urgency": "low",
+        "products": [
+          "crm"
+        ],
+        "issue_types": [
+          "usage_question"
+        ],
+        "sentiment": "neutral",
+        "language": "en",
+        "risk_flags": [],
+        "kb_article_ids": [
+          "KB-070"
+        ],
+        "action": "auto_respond",
+        "reasoning": "The customer asks a how-to question, and KB-070 provides the invitation steps; no human action is needed. Risk flags checked individually: chargeback_threat—none; duplicate_charges—none; time_sensitive—no concrete deadline (the request to mark the ticket critical is not a deadline); revenue_impact—not stated; widespread_outage—not stated."
+      },
+      "assigned_team": null,
+      "suggested_reply": "Hi Lena,\n\nYou can invite your teammate from **Settings > Team**. You can invite members one at a time or in bulk with a CSV file.\n\nPlease note that adding members beyond your current seat count updates your next invoice on a prorated basis.",
+      "handoff_summary": null,
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "ae137e0f639147538ecef357b3accb95",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 11496,
+        "total_tokens": 10082,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3013",
+      "triage": {
+        "summary": "The customer requests an immediate refund of the latest invoice; billing records show two successful transactions of different amounts, and refund eligibility is not established.",
+        "urgency": "medium",
+        "products": [
+          "analytics",
+          "erp"
+        ],
+        "issue_types": [
+          "billing"
+        ],
+        "sentiment": "negative",
+        "language": "en",
+        "risk_flags": [],
+        "kb_article_ids": [
+          "KB-013"
+        ],
+        "action": "route_specialist",
+        "reasoning": "Route to the billing team to review the refund request; the records do not establish that a refund is owed. Risk flags considered individually: chargeback_threat—no dispute threat stated; duplicate_charges—not supported, as the two successful transactions differ in amount; time_sensitive—“immediately” is a demand, but no concrete deadline is given; revenue_impact—not stated; widespread_outage—not applicable. The customer has one previously resolved support ticket."
+      },
+      "assigned_team": "billing",
+      "suggested_reply": null,
+      "handoff_summary": "The customer requests an immediate refund of the latest invoice; billing records show two successful transactions of different amounts, and refund eligibility is not established.\nUrgency: medium | Products: analytics, erp | Issues: billing\nRisk flags: none | KB: KB-013\nReasoning: Route to the billing team to review the refund request; the records do not establish that a refund is owed. Risk flags considered individually: chargeback_threat—no dispute threat stated; duplicate_charges—not supported, as the two successful transactions differ in amount; time_sensitive—“immediately” is a demand, but no concrete deadline is given; revenue_impact—not stated; widespread_outage—not applicable. The customer has one previously resolved support ticket.",
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "141fc4caf5204a18920bbd0ab9d3ef53",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 16341,
+        "total_tokens": 8964,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base",
+          "get_billing_transactions"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3014",
+      "triage": {
+        "summary": "The customer asks how to schedule weekly Analytics PDF reports and reports that the whole team cannot load Analytics dashboards ahead of a 2pm board meeting.",
+        "urgency": "critical",
+        "products": [
+          "analytics"
+        ],
+        "issue_types": [
+          "usage_question",
+          "outage"
+        ],
+        "sentiment": "neutral",
+        "language": "en",
+        "risk_flags": [
+          "time_sensitive",
+          "widespread_outage"
+        ],
+        "kb_article_ids": [
+          "KB-050",
+          "KB-032"
+        ],
+        "action": "escalate_human",
+        "reasoning": "The team-wide dashboard failure leaves an Enterprise workspace unable to use Analytics, and the 2pm board meeting creates a concrete deadline within hours, so a human should take ownership now. Risk flags checked individually: chargeback_threat—no threat stated; duplicate_charges—no duplicate charges indicated; time_sensitive—yes, the meeting is at 2pm; revenue_impact—not explicitly supported by the thread; widespread_outage—yes, nobody on the team can load dashboards. The US status is degraded, but its listed billing-activation incident does not explain the Analytics failure. KB-050 covers Enterprise priority support for workspace-wide unavailability; KB-032 explains that the public status page can lag. The retrieved articles do not answer the weekly scheduling question."
+      },
+      "assigned_team": "engineering_oncall",
+      "suggested_reply": "We understand that nobody on your team can load Analytics dashboards, and that you need them for your 2pm board meeting today. A specialist has taken ownership and is working on the issue. Our monitoring currently shows degraded service in the US region, while the public status page still shows operational. We’re also aware of your question about scheduling weekly PDF reports and will follow up on that.",
+      "handoff_summary": "- The customer first asked how to schedule a weekly PDF report in Analytics, then reported that nobody on their team can load any Analytics dashboard; all show “Service unavailable.”\n- Impact: Enterprise account with 120 seats; the team uses Analytics for board and operations reporting. Their board meeting is at 2pm today and depends on these dashboards.\n- Evidence: US monitoring is degraded, while the public status page shows operational. The active incident returned by monitoring concerns delayed billing activation and does not explain the Analytics failure.\n- History: One prior Analytics ticket about report emails delayed by two hours, resolved in September.\n- Transactions: No billing or payment issue was raised, and no transaction lookup was performed.\n- The available knowledge-base results do not explain how to schedule weekly PDF delivery. Enterprise includes PDF export, but this does not answer scheduling.\n- Recommended next step: Investigate the workspace-wide Analytics failure as a priority and update the customer; separately address the report-scheduling question once service is available.",
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "eaf8931ee15b4c24a737f6bb6b0d91d6",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 29197,
+        "total_tokens": 19594,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base",
+          "search_knowledge_base",
+          "check_service_status",
+          "search_knowledge_base"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3015",
+      "triage": {
+        "summary": "The customer was repeatedly logged out of CRM, but the problem stopped after they disabled a browser extension that blocked cookies.",
+        "urgency": "low",
+        "products": [
+          "crm"
+        ],
+        "issue_types": [
+          "other"
+        ],
+        "sentiment": "negative",
+        "language": "en",
+        "risk_flags": [],
+        "kb_article_ids": [],
+        "action": "route_specialist",
+        "reasoning": "The customer found and resolved the cause, so they are no longer blocked; the evidence does not indicate a CRM bug or service outage. Risk flags checked individually: no chargeback threat, duplicate charges, concrete deadline, business revenue impact, or widespread outage is supported. The available article concerns HTTP 500 errors and does not directly answer this resolved cookie-blocking logout issue, so no article is listed."
+      },
+      "assigned_team": "technical_support",
+      "suggested_reply": null,
+      "handoff_summary": "The customer was repeatedly logged out of CRM, but the problem stopped after they disabled a browser extension that blocked cookies.\nUrgency: low | Products: crm | Issues: other\nRisk flags: none | KB: none\nReasoning: The customer found and resolved the cause, so they are no longer blocked; the evidence does not indicate a CRM bug or service outage. Risk flags checked individually: no chargeback threat, duplicate charges, concrete deadline, business revenue impact, or widespread outage is supported. The available article concerns HTTP 500 errors and does not directly answer this resolved cookie-blocking logout issue, so no article is listed.",
+      "policy_overrides": [
+        "auto_respond_needs_grounding: action auto_respond -> route_specialist (an automatic reply must cite KB articles the search actually returned)"
+      ],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "9addb2580f2841df8bbfbba091e32957",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 19963,
+        "total_tokens": 9227,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base",
+          "check_service_status"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3016",
+      "triage": {
+        "summary": "Priya asks whether CRM admins can invite multiple users at once; the knowledge base confirms bulk invitations are available via CSV in Settings > Team.",
+        "urgency": "low",
+        "products": [
+          "crm"
+        ],
+        "issue_types": [
+          "usage_question"
+        ],
+        "sentiment": "neutral",
+        "language": "en",
+        "risk_flags": [],
+        "kb_article_ids": [
+          "KB-070"
+        ],
+        "action": "auto_respond",
+        "reasoning": "KB-070 answers the question, so no human investigation is needed. Risk flags checked individually: chargeback_threat—no bank dispute threat; duplicate_charges—no duplicate charges reported; time_sensitive—no deadline stated; revenue_impact—no business or customer revenue at risk mentioned; widespread_outage—no service outage reported."
+      },
+      "assigned_team": null,
+      "suggested_reply": "Yes—bulk invites are supported via CSV. As an admin, go to **Settings > Team** to invite members in bulk.\n\nIf you add members beyond your available seats, your next invoice will be updated on a prorated basis.",
+      "handoff_summary": null,
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "236e506ffa5f4bc3b0bf1b9a57d295b7",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 9945,
+        "total_tokens": 10962,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3017",
+      "triage": {
+        "summary": "The customer cannot save new CRM contacts, blocking them from logging client calls scheduled throughout the day.",
+        "urgency": "high",
+        "products": [
+          "crm"
+        ],
+        "issue_types": [
+          "bug"
+        ],
+        "sentiment": "negative",
+        "language": "en",
+        "risk_flags": [],
+        "kb_article_ids": [],
+        "action": "route_specialist",
+        "reasoning": "The Save failure blocks a core CRM function for one user, and the EU service status is operational with no active incidents; this warrants specialist investigation, but there is no evidence of a widespread or confirmed outage. Risk flags checked individually: chargeback_threat—no; duplicate_charges—no; time_sensitive—no concrete deadline is stated; revenue_impact—no explicit business revenue or deals at risk; widespread_outage—no, only one user is identified. The knowledge-base results contain no article that helps resolve this issue."
+      },
+      "assigned_team": "technical_support",
+      "suggested_reply": null,
+      "handoff_summary": "The customer cannot save new CRM contacts, blocking them from logging client calls scheduled throughout the day.\nUrgency: high | Products: crm | Issues: bug\nRisk flags: none | KB: none\nReasoning: The Save failure blocks a core CRM function for one user, and the EU service status is operational with no active incidents; this warrants specialist investigation, but there is no evidence of a widespread or confirmed outage. Risk flags checked individually: chargeback_threat—no; duplicate_charges—no; time_sensitive—no concrete deadline is stated; revenue_impact—no explicit business revenue or deals at risk; widespread_outage—no, only one user is identified. The knowledge-base results contain no article that helps resolve this issue.",
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "e74b367222b944e692b1c3fb4cb8a9eb",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 15571,
+        "total_tokens": 8738,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base",
+          "check_service_status"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3018",
+      "triage": {
+        "summary": "The customer asks whether an agency partner program is available for reselling CRM to clients.",
+        "urgency": "low",
+        "products": [
+          "crm"
+        ],
+        "issue_types": [
+          "other"
+        ],
+        "sentiment": "neutral",
+        "language": "en",
+        "risk_flags": [],
+        "kb_article_ids": [],
+        "action": "route_specialist",
+        "reasoning": "The knowledge-base results do not address agency partnerships, so route to a specialist to confirm whether a reseller program is available. No chargeback threat, duplicate charges, concrete deadline, stated revenue impact, or widespread outage is supported by the thread or tool results."
+      },
+      "assigned_team": "technical_support",
+      "suggested_reply": null,
+      "handoff_summary": "The customer asks whether an agency partner program is available for reselling CRM to clients.\nUrgency: low | Products: crm | Issues: other\nRisk flags: none | KB: none\nReasoning: The knowledge-base results do not address agency partnerships, so route to a specialist to confirm whether a reseller program is available. No chargeback threat, duplicate charges, concrete deadline, stated revenue impact, or widespread outage is supported by the thread or tool results.",
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "4d5816886e444d13804b15eaff9ffd60",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 14005,
+        "total_tokens": 10692,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base",
+          "search_knowledge_base"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3019",
+      "triage": {
+        "summary": "The customer’s $1,080 payment for 20 additional seats succeeded, but the seats are not visible in Team settings; an active US incident reports delays activating subscriptions after successful card authorization.",
+        "urgency": "medium",
+        "products": [
+          "analytics",
+          "erp"
+        ],
+        "issue_types": [
+          "billing"
+        ],
+        "sentiment": "neutral",
+        "language": "en",
+        "risk_flags": [],
+        "kb_article_ids": [],
+        "action": "route_specialist",
+        "reasoning": "Route to a billing specialist to investigate the seat activation. The status result confirms a billing activation delay, not an outage affecting product use, so this does not qualify as an outage issue or confirmed outage for escalation. Risk flags assessed individually: chargeback_threat—no dispute threat; duplicate_charges—only one charge for this seat addition is shown (the earlier transaction is separate); time_sensitive—no concrete deadline; revenue_impact—no business, customer, or deal impact is reported; widespread_outage—no evidence that multiple users or the organization cannot use the service. The seat-management article does not explain this post-payment activation delay."
+      },
+      "assigned_team": "billing",
+      "suggested_reply": null,
+      "handoff_summary": "The customer’s $1,080 payment for 20 additional seats succeeded, but the seats are not visible in Team settings; an active US incident reports delays activating subscriptions after successful card authorization.\nUrgency: medium | Products: analytics, erp | Issues: billing\nRisk flags: none | KB: none\nReasoning: Route to a billing specialist to investigate the seat activation. The status result confirms a billing activation delay, not an outage affecting product use, so this does not qualify as an outage issue or confirmed outage for escalation. Risk flags assessed individually: chargeback_threat—no dispute threat; duplicate_charges—only one charge for this seat addition is shown (the earlier transaction is separate); time_sensitive—no concrete deadline; revenue_impact—no business, customer, or deal impact is reported; widespread_outage—no evidence that multiple users or the organization cannot use the service. The seat-management article does not explain this post-payment activation delay.",
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "39ab783423984bd583b022a3d1209613",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 28728,
+        "total_tokens": 13916,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base",
+          "get_billing_transactions",
+          "check_service_status"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3020",
+      "triage": {
+        "summary": "The customer asks how to export an Analytics dashboard as a PDF; the Enterprise plan includes this feature, and KB-040 documents the steps.",
+        "urgency": "low",
+        "products": [
+          "analytics"
+        ],
+        "issue_types": [
+          "usage_question"
+        ],
+        "sentiment": "neutral",
+        "language": "ja",
+        "risk_flags": [],
+        "kb_article_ids": [
+          "KB-040"
+        ],
+        "action": "auto_respond",
+        "reasoning": "KB-040 answers the question: open the dashboard, choose Share > Export, then PDF. Risk flags checked individually: chargeback_threat—none stated; duplicate_charges—none indicated; time_sensitive—no deadline stated; revenue_impact—no business or customer losses reported; widespread_outage—no service failure or multiple affected users reported. This is a low-urgency usage question that can be answered from the knowledge base."
+      },
+      "assigned_team": null,
+      "suggested_reply": "AnalyticsのダッシュボードをPDFでエクスポートするには、対象のダッシュボードを開き、**［共有］→［エクスポート］→［PDF］**を選択してください。EnterpriseプランにはPDFエクスポート機能が含まれています。",
+      "handoff_summary": null,
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "035d505faa6947a7836c780647dc5b50",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 11940,
+        "total_tokens": 9960,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3021",
+      "triage": {
+        "summary": "The customer requests a Kanban board view for CRM deals and asks whether one is planned.",
+        "urgency": "low",
+        "products": [
+          "crm"
+        ],
+        "issue_types": [
+          "feature_request"
+        ],
+        "sentiment": "positive",
+        "language": "en",
+        "risk_flags": [],
+        "kb_article_ids": [],
+        "action": "route_specialist",
+        "reasoning": "This is a non-urgent feature request with no reported blockage or business impact; route it for the appropriate team to log or review. No risk flags are supported: there is no chargeback threat, duplicate charge, stated deadline, revenue impact, or widespread outage."
+      },
+      "assigned_team": "product",
+      "suggested_reply": null,
+      "handoff_summary": "The customer requests a Kanban board view for CRM deals and asks whether one is planned.\nUrgency: low | Products: crm | Issues: feature_request\nRisk flags: none | KB: none\nReasoning: This is a non-urgent feature request with no reported blockage or business impact; route it for the appropriate team to log or review. No risk flags are supported: there is no chargeback threat, duplicate charge, stated deadline, revenue impact, or widespread outage.",
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "83f9559dce8d4103a2cf7041b7869fba",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 7799,
+        "total_tokens": 7751,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base"
+        ]
+      }
+    },
+    {
+      "ticket_id": "T-3022",
+      "triage": {
+        "summary": "The customer asks how to export all CRM data as CSV for an internal audit at the end of this month.",
+        "urgency": "low",
+        "products": [
+          "crm"
+        ],
+        "issue_types": [
+          "usage_question"
+        ],
+        "sentiment": "neutral",
+        "language": "th",
+        "risk_flags": [
+          "time_sensitive"
+        ],
+        "kb_article_ids": [
+          "KB-090"
+        ],
+        "action": "auto_respond",
+        "reasoning": "KB-090 explains that workspace admins can export all data as CSV from Settings > Data > Export, so the question can be answered without human action. The stated end-of-month audit is a concrete deadline, supporting time_sensitive. There is no chargeback threat, duplicate charge, stated revenue impact, or widespread outage."
+      },
+      "assigned_team": null,
+      "suggested_reply": "ได้ครับ หากคุณเป็นผู้ดูแล Workspace สามารถส่งออกข้อมูลทั้งหมดเป็นไฟล์ CSV ได้ที่ **Settings > Data > Export** ระบบจะส่งไฟล์ให้ทางอีเมลเมื่อพร้อมครับ ขอให้เผื่อเวลาสำหรับการส่งออกก่อนกำหนดตรวจสอบสิ้นเดือนด้วยนะครับ",
+      "handoff_summary": null,
+      "policy_overrides": [],
+      "fallback_reason": null,
+      "metadata": {
+        "trace_id": "6e128466df3a4b18a975fea7fa501217",
+        "model": "gpt-6-luna",
+        "prompt_version": "4",
+        "latency_ms": 14399,
+        "total_tokens": 10887,
+        "tool_calls": [
+          "get_customer_history",
+          "search_knowledge_base"
+        ]
+      }
+    }
+  ]
+}

@@ -13,6 +13,7 @@ x-app: &app
     - ./scripts:/app/scripts
     - ./tests:/app/tests
     - ./data:/app/data
+    - ./evals:/app/evals
 
 services:
   db:
