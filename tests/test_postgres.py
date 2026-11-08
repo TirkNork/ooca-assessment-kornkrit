@@ -99,7 +99,7 @@ def sql(engine: Engine, seeded, embedder: HashingEmbedder) -> Repositories:
 
 @pytest.mark.integration
 def test_seed_loads_everything(seeded, data_dir) -> None:
-    assert (seeded.customers, seeded.articles) == (3, 10)
+    assert (seeded.customers, seeded.articles) == (5, 12)
     assert seeded.chunks == seeded.newly_embedded > seeded.articles
 
 

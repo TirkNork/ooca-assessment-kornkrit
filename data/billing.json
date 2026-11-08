@@ -54,5 +54,30 @@
         "status": "succeeded"
       }
     ]
+  },
+  {
+    "customer_id": "C-4001",
+    "subscription_status": "active",
+    "transactions": [
+      {
+        "transaction_id": "TX-88301",
+        "created_at": "2026-11-01T00:00:00Z",
+        "amount": "5400.00",
+        "currency": "USD",
+        "status": "succeeded"
+      },
+      {
+        "transaction_id": "TX-88377",
+        "created_at": "2026-11-07T07:05:00Z",
+        "amount": "1080.00",
+        "currency": "USD",
+        "status": "succeeded"
+      }
+    ]
+  },
+  {
+    "customer_id": "C-5001",
+    "subscription_status": "free",
+    "transactions": []
   }
 ]

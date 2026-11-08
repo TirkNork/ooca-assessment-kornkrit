@@ -44,5 +44,37 @@
         "since": "2026-06-01"
       }
     ]
+  },
+  {
+    "customer_id": "C-4001",
+    "name": "Daniel Kim",
+    "plan": "enterprise",
+    "region": "us",
+    "seats": 120,
+    "customer_since": "2025-11-10",
+    "products": [
+      {
+        "product": "analytics",
+        "since": "2025-11-10"
+      },
+      {
+        "product": "erp",
+        "since": "2026-01-20"
+      }
+    ]
+  },
+  {
+    "customer_id": "C-5001",
+    "name": "Lena Fischer",
+    "plan": "free",
+    "region": "eu",
+    "seats": 1,
+    "customer_since": "2026-10-01",
+    "products": [
+      {
+        "product": "crm",
+        "since": "2026-10-01"
+      }
+    ]
   }
 ]

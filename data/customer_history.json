@@ -28,5 +28,23 @@
     "customer_id": "C-3001",
     "activity_summary": "Active CRM user with daily logins for 5 months, uses the CRM desktop app on macOS. No previous support tickets.",
     "past_tickets": []
+  },
+  {
+    "customer_id": "C-4001",
+    "activity_summary": "Northwind Logistics uses Analytics for board and operations reporting and ERP for orders. 120 seats, heavy daily usage across the US team.",
+    "past_tickets": [
+      {
+        "opened_at": "2026-09-03T15:10:00Z",
+        "product": "analytics",
+        "summary": "Analytics: scheduled report emails delayed by two hours.",
+        "urgency": "medium",
+        "resolved": true
+      }
+    ]
+  },
+  {
+    "customer_id": "C-5001",
+    "activity_summary": "Signed up for the CRM free plan a month ago. Light usage, a few logins per week.",
+    "past_tickets": []
   }
 ]
