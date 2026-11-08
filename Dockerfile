@@ -10,7 +10,7 @@ ENV UV_COMPILE_BYTECODE=1 \
     UV_PYTHON_DOWNLOADS=0 \
     PYTHONUNBUFFERED=1 \
     PATH="/app/.venv/bin:$PATH" \
-    DATA_DIR=/app/data
+    DATA_DIR=/app/data/mock
 
 WORKDIR /app
 

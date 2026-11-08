@@ -28,8 +28,8 @@ from triage.service import TriageService
 
 
 @pytest.fixture(scope="module")
-def tickets(data_dir) -> dict[str, Ticket]:
-    raw = (data_dir / "sample_tickets.json").read_bytes()
+def tickets(sample_tickets_path) -> dict[str, Ticket]:
+    raw = sample_tickets_path.read_bytes()
     return {t.ticket_id: t for t in TypeAdapter(list[Ticket]).validate_json(raw)}
 
 

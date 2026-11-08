@@ -13,8 +13,8 @@ def _load[T](path: Path, model: type[T]) -> list[T]:
 
 
 @pytest.fixture(scope="module")
-def tickets(data_dir: Path) -> list[Ticket]:
-    return _load(data_dir / "sample_tickets.json", Ticket)
+def tickets(sample_tickets_path: Path) -> list[Ticket]:
+    return _load(sample_tickets_path, Ticket)
 
 
 @pytest.fixture(scope="module")
@@ -50,7 +50,7 @@ def test_every_customer_region_has_a_status(data_dir: Path) -> None:
 
 
 def test_kb_articles_have_front_matter_matching_file_name(data_dir: Path) -> None:
-    articles = sorted((data_dir / "kb").glob("*.md"))
+    articles = sorted((data_dir / "kb").glob("KB-*.md"))
     assert len(articles) >= 8
     for path in articles:
         lines = path.read_text(encoding="utf-8").splitlines()

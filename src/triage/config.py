@@ -27,7 +27,7 @@ class Settings(BaseSettings):
     openai_requests_per_second: float | None = Field(default=None, gt=0)
 
     # Set to /app/data in the Docker image; the relative default resolves from the working dir.
-    data_dir: Path = Path("data")
+    data_dir: Path = Path("data/mock")
 
     # Where tools read from: JSON files + BM25, or Postgres + pgvector (seed it first).
     repository_backend: Literal["file", "postgres"] = "file"

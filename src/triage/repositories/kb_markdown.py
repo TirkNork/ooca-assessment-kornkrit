@@ -33,4 +33,4 @@ def parse_article(text: str) -> KBArticle:
 
 
 def load_articles(kb_dir: Path) -> list[KBArticle]:
-    return [parse_article(p.read_text(encoding="utf-8")) for p in sorted(kb_dir.glob("*.md"))]
+    return [parse_article(p.read_text(encoding="utf-8")) for p in sorted(kb_dir.glob("KB-*.md"))]

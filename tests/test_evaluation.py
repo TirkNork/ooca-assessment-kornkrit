@@ -137,21 +137,19 @@ def test_consistency_counts_tickets_with_identical_decisions() -> None:
 
 # --- the dataset ----------------------------------------------------------------------------
 
-TICKET_FILES = ["sample_tickets.json", "test_set.json"]
+TICKET_FILES = [Path("data/sample_tickets.json"), Path("evals/test_set.json")]
 
 
 @pytest.fixture(scope="module")
-def labels(data_dir: Path) -> dict[str, Expected]:
-    return TypeAdapter(dict[str, Expected]).validate_json(
-        (data_dir / "eval_labels.json").read_text()
-    )
+def labels() -> dict[str, Expected]:
+    return TypeAdapter(dict[str, Expected]).validate_json(Path("evals/labels.json").read_text())
 
 
-def test_every_ticket_has_labels_and_every_label_a_ticket(data_dir: Path, labels) -> None:
+def test_every_ticket_has_labels_and_every_label_a_ticket(labels) -> None:
     ids = [
         t.ticket_id
-        for name in TICKET_FILES
-        for t in TypeAdapter(list[Ticket]).validate_json((data_dir / name).read_text())
+        for path in TICKET_FILES
+        for t in TypeAdapter(list[Ticket]).validate_json(path.read_text())
     ]
     assert len(ids) == len(set(ids))
     assert set(ids) == labels.keys()

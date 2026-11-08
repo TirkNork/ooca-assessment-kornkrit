@@ -64,8 +64,8 @@ def script() -> ModuleType:
 
 
 @pytest.fixture
-def tickets_file(data_dir: Path) -> str:
-    return str(data_dir / "sample_tickets.json")
+def tickets_file(sample_tickets_path: Path) -> str:
+    return str(sample_tickets_path)
 
 
 # --- scripts/triage_tickets.py ---------------------------------------------------------------
@@ -114,8 +114,10 @@ def test_health(client: TestClient) -> None:
     assert client.get("/health").json() == {"status": "ok"}
 
 
-def test_triage_endpoint_returns_the_service_output(client: TestClient, data_dir: Path) -> None:
-    ticket = json.loads((data_dir / "sample_tickets.json").read_text())[0]
+def test_triage_endpoint_returns_the_service_output(
+    client: TestClient, sample_tickets_path: Path
+) -> None:
+    ticket = json.loads(sample_tickets_path.read_text())[0]
 
     response = client.post("/triage", json=ticket)
 

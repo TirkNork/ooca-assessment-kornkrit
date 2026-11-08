@@ -35,7 +35,7 @@ from triage.service import TriageService, build_service
 
 DEFAULT_TICKET_FILES = [
     Path("data/sample_tickets.json"),
-    Path("data/test_set.json"),
+    Path("evals/test_set.json"),
 ]
 RESULTS_DIR = Path("evals/results")
 
@@ -43,7 +43,7 @@ RESULTS_DIR = Path("evals/results")
 def main(argv: list[str] | None = None, service: TriageService | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("ticket_files", nargs="*", type=Path, default=DEFAULT_TICKET_FILES)
-    parser.add_argument("--labels", type=Path, default=Path("data/eval_labels.json"))
+    parser.add_argument("--labels", type=Path, default=Path("evals/labels.json"))
     parser.add_argument("--runs", type=int, default=1, help="runs per ticket (default 1)")
     parser.add_argument("--concurrency", type=int, default=4, help="tickets in parallel")
     parser.add_argument("--backend", choices=["file", "postgres"], help="override the backend")
