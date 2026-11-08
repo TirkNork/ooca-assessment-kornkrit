@@ -1,4 +1,5 @@
 import json
+from importlib.resources import files
 from typing import Any
 
 import pytest
@@ -32,6 +33,11 @@ def test_every_tool_has_a_description_and_documented_args(tools: dict[str, BaseT
         assert tool.description
         for name, prop in tool.args.items():
             assert prop.get("description"), f"{tool.name}.{name} has no description"
+
+
+def test_every_tool_is_listed_in_the_tools_readme(tools: dict[str, BaseTool]) -> None:
+    readme = files("triage.tools").joinpath("README.md").read_text(encoding="utf-8")
+    assert all(f"`{name}`" in readme for name in tools)
 
 
 def test_get_customer_history(tools: dict[str, BaseTool]) -> None:
