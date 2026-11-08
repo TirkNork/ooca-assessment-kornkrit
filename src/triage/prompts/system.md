@@ -32,6 +32,11 @@ take actions such as issuing refunds.
 
 ## Classification guide
 
+Classify what the customer raises in this ticket. Tool results are evidence about those issues;
+they do not add new ones. If you notice something unrelated on the account (e.g. a pending charge
+from an earlier, separate request), mention it in the reasoning but do not let it add issue
+types or risk flags or change the action.
+
 **Urgency**
 - `critical`: the service is down or unusable for a business (many users, revenue at risk), or
   money is being lost now with escalation threatened (e.g. a chargeback), or a hard deadline
@@ -50,13 +55,19 @@ every product affected; a platform-wide outage affects all of the customer's pro
 **Issue types**: list every distinct issue; a thread can contain several.
 - `billing`: payments, charges, refunds, invoices, plan upgrades/downgrades and plan access
   that depends on a payment.
-- `outage`: the customer cannot use the service or a product because it is down or erroring.
-  A backend incident behind another kind of issue (e.g. a delay in billing activation) does not
-  make the ticket an outage; classify it by what the customer experiences.
-- `bug`: something behaves differently from how it is documented to work.
+- `outage`: the service or a product is down or erroring for **many users** (several users,
+  browsers or devices, or the whole organization), or a confirmed incident in the customer's
+  region explains their errors. An error seen by a single user while colleagues can use the
+  product is a `bug`, not an outage: troubleshoot it with the knowledge base first. A backend
+  incident behind another kind of issue (e.g. a delay in billing activation) does not make the
+  ticket an outage; classify it by what the customer experiences.
+- `bug`: something behaves differently from how it is documented to work, including an
+  error that affects only one user.
 - `feature_request`: asks for something the product does not do.
 - `usage_question`: how to use something that works as designed.
-- `account_access`: login, password, 2FA, SSO, users and seats.
+- `account_access`: the customer cannot get into their account (login, password, 2FA, SSO)
+  or needs an account change that only an admin or support can make. Asking how to add or
+  invite users is a `usage_question`.
 - `other`: anything else.
 
 **Sentiment**: judge the whole thread, weighting the latest message most. A friendly, patient
@@ -81,7 +92,8 @@ tone (e.g. "no rush", emojis) is `positive` even when reporting a problem.
 - `route_specialist`: a specific team must investigate or act (a bug to reproduce, a feature
   request to log, an account change), but it is not urgent.
 - `escalate_human`: urgent or high-risk: critical urgency, money that must be refunded or
-  reversed, a chargeback threat, or an outage. A human must take ownership now.
+  reversed, a chargeback threat, or a widespread or confirmed outage. A human must take
+  ownership now.
 
 When unsure between two actions, choose the safer (more human) one.
 

@@ -68,11 +68,10 @@ def test_chargeback_threat_requires_escalation() -> None:
     assert chargeback_threat(_ctx(_triage())) is None
 
 
-def test_duplicate_billing_charges_cannot_be_auto_answered() -> None:
-    triage = _triage(issue_types=[IssueType.BILLING], risk_flags=[RiskFlag.DUPLICATE_CHARGES])
-    req = money_needs_human(_ctx(triage))
+def test_billing_issues_cannot_be_auto_answered() -> None:
+    req = money_needs_human(_ctx(_triage(issue_types=[IssueType.BILLING])))
     assert req is not None and req.min_action is Action.ROUTE_SPECIALIST
-    assert money_needs_human(_ctx(_triage(issue_types=[IssueType.BILLING]))) is None
+    assert money_needs_human(_ctx(_triage(issue_types=[IssueType.USAGE_QUESTION]))) is None
 
 
 @pytest.mark.parametrize(("plan", "applies"), [(Plan.ENTERPRISE, True), (Plan.PRO, False)])

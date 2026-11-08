@@ -42,13 +42,10 @@ def chargeback_threat(ctx: PolicyContext) -> Requirement | None:
 
 
 def money_needs_human(ctx: PolicyContext) -> Requirement | None:
-    if (
-        IssueType.BILLING in ctx.triage.issue_types
-        and RiskFlag.DUPLICATE_CHARGES in ctx.triage.risk_flags
-    ):
+    if IssueType.BILLING in ctx.triage.issue_types:
         return Requirement(
             rule="money_needs_human",
-            reason="only the billing team can refund or void charges",
+            reason="only the billing team can check, refund or void charges",
             min_action=Action.ROUTE_SPECIALIST,
         )
     return None
